@@ -1,0 +1,14 @@
+TRAKNUS BATTERY SIMULATOR — OFFLINE VERSION
+
+CARA MEMBUKA DI LAPTOP
+1. Ekstrak ZIP ini.
+2. Buka “index.html” di folder utama dengan Chrome atau Microsoft Edge.
+3. Tidak perlu Python, CMD, Excel, atau instalasi tambahan.
+
+FOLDER SOURCE_CODE
+Berisi codingan yang bisa diedit: index.html, styles.css, app.js, dan safe-storage.js. Jaga file-file source_code tetap dalam satu folder.
+
+Di HP portrait, form ditata bertumpuk dan grafik bisa digeser ke samping untuk melihat semua jam.
+Untuk menyimpan hasil sebagai PDF, jalankan simulasi lalu tekan “Cetak / simpan PDF” dan pilih “Save as PDF”. Tata letak cetak dirapatkan, logo tidak lagi memakai kotak latar, dan laporan mencantumkan tanggal serta waktu hingga detik.
+
+Untuk link customer, versi HTML dapat di-host sebagai situs statis, misalnya melalui GitHub Pages atau domain perusahaan. ZIP ini tidak memakai GPT Site.
