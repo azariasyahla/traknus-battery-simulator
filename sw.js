@@ -1,4 +1,4 @@
-const CACHE_NAME = "traknus-battery-pwa-v13";
+const CACHE_NAME = "traknus-battery-pwa-v14";
 const APP_BASE = self.registration.scope;
 const APP_SHELL = [
   APP_BASE,
