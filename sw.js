@@ -1,4 +1,4 @@
-const CACHE_NAME = "traknus-battery-pwa-v1";
+const CACHE_NAME = "traknus-battery-pwa-v5";
 const APP_BASE = self.registration.scope;
 const APP_SHELL = [
   APP_BASE,
@@ -7,7 +7,9 @@ const APP_SHELL = [
   new URL("icons/traknus-app-192.png", APP_BASE).href,
   new URL("icons/traknus-app-512.png", APP_BASE).href,
   new URL("icons/traknus-app-512-maskable.png", APP_BASE).href,
-  new URL("icons/traknus-app-180.png", APP_BASE).href
+  new URL("icons/traknus-app-180.png", APP_BASE).href,
+  new URL("assets/forklift-traknus.webp", APP_BASE).href,
+  new URL("assets/warehouse-forklift.webp", APP_BASE).href
 ];
 
 self.addEventListener("install", event => {
