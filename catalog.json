@@ -1,0 +1,929 @@
+{
+  "models": [
+    {
+      "model": "3TE25",
+      "voltage_v": 80.0,
+      "en_ah_per_hour": 151.99176008541934,
+      "battery_options": [
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "4CBT",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 13.67023525331402,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FB10",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 75.0,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FB14",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 79.16666666666667,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FB15",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 81.25,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FB18",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 87.5,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FB20",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 85.41666666666667,
+      "battery_options": [
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FB25",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 93.75,
+      "battery_options": [
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FB30",
+      "voltage_v": 80.0,
+      "en_ah_per_hour": 67.5,
+      "battery_options": [
+        {
+          "ah": 302,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        151
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FBE15",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 79.16666666666667,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.2,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FBE18",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 85.41666666666667,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.2,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FBE20",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 89.58333333333333,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.2,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FBH10",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 75.0,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBH14",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 79.16666666666667,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBH15",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 83.33333333333333,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBH18",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 89.58333333333333,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBH20",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 87.5,
+      "battery_options": [
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBH25",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 95.83333333333333,
+      "battery_options": [
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBH30",
+      "voltage_v": 80.0,
+      "en_ah_per_hour": 63.75,
+      "battery_options": [
+        {
+          "ah": 302,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        151
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBHJ35",
+      "voltage_v": 80.0,
+      "en_ah_per_hour": 70.0,
+      "battery_options": [
+        {
+          "ah": 302,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        151
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBJ35",
+      "voltage_v": 80.0,
+      "en_ah_per_hour": 72.5,
+      "battery_options": [
+        {
+          "ah": 302,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        151
+      ],
+      "power_modes": {
+        "Economy": 0.8,
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.3
+      }
+    },
+    {
+      "model": "8FBN15",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 83.33333333333333,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.35
+      }
+    },
+    {
+      "model": "8FBN18",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 85.41666666666667,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.35
+      }
+    },
+    {
+      "model": "8FBN20",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 102.08333333333333,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.35
+      }
+    },
+    {
+      "model": "8FBN25",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 112.5,
+      "battery_options": [
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        200
+      ],
+      "power_modes": {
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.35
+      }
+    },
+    {
+      "model": "8FBN30",
+      "voltage_v": 80.0,
+      "en_ah_per_hour": 80.0,
+      "battery_options": [
+        {
+          "ah": 302,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 604,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        151
+      ],
+      "power_modes": {
+        "Standard": 1.0,
+        "Power": 1.1,
+        "High Power": 1.35
+      }
+    },
+    {
+      "model": "8FBP15",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 16.089385115321004,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBR(S)14",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 53.45449685954832,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBR(S)15",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 49.77777777777778,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBR(S)18",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 52.26666666666666,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBR(S)20",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 68.92312994086919,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBR(S)25",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 72.8,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBR(S)30",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 65.57895081994478,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 456,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBS(S)14",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 24.206451612903226,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBS(S)15",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 24.310077519379846,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "8FBS(S)18",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 25.290404162594072,
+      "battery_options": [
+        {
+          "ah": 228,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [
+        114
+      ],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      }
+    },
+    {
+      "model": "RRE140",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 57.291667,
+      "battery_options": [
+        {
+          "ah": 300,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 420,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 630,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      },
+      "catalog_note": "Toyota RRE H/HE reference. EN 16796 kWh/h converted at 48 V. Li-ion 300–420/630 Ah capacities depend on battery compartment; confirm exact truck configuration. Charger current not stated in this specification."
+    },
+    {
+      "model": "RRE160",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 58.958333,
+      "battery_options": [
+        {
+          "ah": 300,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 420,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 630,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      },
+      "catalog_note": "Toyota RRE H/HE reference. EN 16796 kWh/h converted at 48 V. Li-ion 300–420/630 Ah capacities depend on battery compartment; confirm exact truck configuration. Charger current not stated in this specification."
+    },
+    {
+      "model": "RRE180",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 69.166667,
+      "battery_options": [
+        {
+          "ah": 300,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 420,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 630,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      },
+      "catalog_note": "Toyota RRE H/HE reference. EN 16796 kWh/h converted at 48 V. Li-ion 300–420/630 Ah capacities depend on battery compartment; confirm exact truck configuration. Charger current not stated in this specification."
+    },
+    {
+      "model": "RRE200",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 72.5,
+      "battery_options": [
+        {
+          "ah": 300,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 420,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 630,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      },
+      "catalog_note": "Toyota RRE H/HE reference. EN 16796 kWh/h converted at 48 V. Li-ion 300–420/630 Ah capacities depend on battery compartment; confirm exact truck configuration. Charger current not stated in this specification."
+    },
+    {
+      "model": "RRE250",
+      "voltage_v": 48.0,
+      "en_ah_per_hour": 82.916667,
+      "battery_options": [
+        {
+          "ah": 300,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 420,
+          "reserve_pct": 0.05
+        },
+        {
+          "ah": 630,
+          "reserve_pct": 0.05
+        }
+      ],
+      "charger_options_a": [],
+      "power_modes": {
+        "Economy": 0.85,
+        "Standard": 1.0,
+        "Power": 1.05,
+        "High Power": 1.25
+      },
+      "catalog_note": "Toyota RRE H/HE reference. EN 16796 kWh/h converted at 48 V. Li-ion 300–420/630 Ah capacities depend on battery compartment; confirm exact truck configuration. Charger current not stated in this specification."
+    }
+  ],
+  "intensity_factors": {
+    "Very Low": 0.6,
+    "Low": 0.7,
+    "Medium": 0.8,
+    "High": 0.9,
+    "Very High": 1.0
+  },
+  "lift_factors": {
+    "All": 0.8,
+    "4.3–8.0 m": 0.9,
+    "8.1 m+": 1.0
+  },
+  "time_step_min": 5,
+  "charge_efficiency": 1.0,
+  "battery_efficiency": 1.0
+}

@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Traknus Battery Simulator",
-  "short_name": "Battery Sim",
-  "description": "Forklift battery runtime simulator for shifts, breaks, charging, and truck comparisons.",
+  "name": "Traknus Lithium Simulator",
+  "short_name": "Traknus Lithium",
+  "description": "Forklift lithium battery simulation across operating shifts, breaks, and charging.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
