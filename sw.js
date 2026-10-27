@@ -1,4 +1,4 @@
-const CACHE_NAME = "traknus-battery-pwa-v9";
+const CACHE_NAME = "traknus-battery-pwa-v10";
 const APP_BASE = self.registration.scope;
 const APP_SHELL = [
   APP_BASE,
@@ -9,7 +9,13 @@ const APP_SHELL = [
   new URL("icons/traknus-app-512-maskable.png", APP_BASE).href,
   new URL("icons/traknus-app-180.png", APP_BASE).href,
   new URL("assets/toyota-8fb-counterbalance.webp", APP_BASE).href,
-  new URL("assets/toyota-8fbs-reach.webp", APP_BASE).href
+  new URL("assets/toyota-8fbs-reach.webp", APP_BASE).href,
+  new URL("assets/toyota-8fbe.webp", APP_BASE).href,
+  new URL("assets/toyota-8fbn.webp", APP_BASE).href,
+  new URL("assets/toyota-8fbr.webp", APP_BASE).href,
+  new URL("assets/toyota-8fbp-order-picker.webp", APP_BASE).href,
+  new URL("assets/toyota-4cbt-tow-tractor.webp", APP_BASE).href,
+  new URL("assets/toyota-3te-tow-tractor.webp", APP_BASE).href
 ];
 
 self.addEventListener("install", event => {
