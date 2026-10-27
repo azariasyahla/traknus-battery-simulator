@@ -379,7 +379,7 @@
       return '<svg class="truck-icon" viewBox="0 0 120 78" aria-hidden="true"><g fill="none" stroke="#2268a7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 55h48V38H45L34 26H20z"/><path d="M68 47h23l12 8H68"/><path d="M22 26V13h8v42"/><path d="M30 16h22M30 24h18"/><path d="M27 57a7 7 0 1 0 14 0M76 57a7 7 0 1 0 14 0"/><path d="M100 55h9"/></g><path d="M43 28h21v10H45z" fill="#2268a7" opacity=".14"/></svg>';
     }
     function typePicker(t,slot) {
-      var selected=t.type,photoCB=truckPhotoFor(t.model,"CB"),photoWH=truckPhotoFor(t.model,"WH");
+      var selected=t.type,photoCB=selected==="CB"&&t.model?truckPhotoFor(t.model,"CB"):TRAKNUS_CB_FORKLIFT_IMAGE,photoWH=selected==="WH"&&t.model?truckPhotoFor(t.model,"WH"):TRAKNUS_WH_FORKLIFT_IMAGE;
       return '<div class="type-grid">'+
         '<button class="type-card cb '+(selected==="CB"?"selected":"")+'" data-act="type" data-slot="'+slot+'" data-value="CB"><span class="truck-photo-wrap"><img class="truck-photo" src="'+photoCB+'" alt="Toyota counterbalance forklift from Traktor Nusantara"></span><span><span class="type-label">CB · Counterbalance</span><span class="type-detail">'+tr("Truk counterbalance","Counterbalance forklift")+'</span></span></button>'+
         '<button class="type-card wh '+(selected==="WH"?"selected":"")+'" data-act="type" data-slot="'+slot+'" data-value="WH"><span class="truck-photo-wrap"><img class="truck-photo" src="'+photoWH+'" alt="Forklift photographed in a warehouse"></span><span><span class="type-label">WH · Warehouse</span><span class="type-detail">'+tr("Truk gudang / warehouse","Warehouse forklift")+'</span></span></button></div>';
