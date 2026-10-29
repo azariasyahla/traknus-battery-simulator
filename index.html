@@ -583,16 +583,22 @@
       });
       parts.push('<rect x="'+L+'" y="'+y(10).toFixed(1)+'" width="'+iw+'" height="'+(y(0)-y(10)).toFixed(1)+'" fill="#e54855" opacity=".16"/>');
       for(var v=0;v<=100;v++){
-        var major=v%10===0, medium=v%5===0;
-        parts.push('<line x1="'+L+'" y1="'+y(v)+'" x2="'+(W-R)+'" y2="'+y(v)+'" stroke="'+line+'" stroke-width="'+(major?"1":medium?".65":".35")+'" opacity="'+(major?".72":medium?".34":".14")+'"/>');
-        if(major)parts.push('<text x="'+(L-9)+'" y="'+(y(v)+3.5)+'" text-anchor="end" fill="'+ink+'" font-size="10">'+v+'%</text>');
+        var major=v%10===0,medium=v%5===0,yy=y(v),tick=major?8:medium?6:3;
+        if(major)parts.push('<line x1="'+L+'" y1="'+yy+'" x2="'+(W-R)+'" y2="'+yy+'" stroke="'+line+'" stroke-width="1" opacity=".72"/>');
+        parts.push('<line x1="'+(L-tick)+'" y1="'+yy+'" x2="'+L+'" y2="'+yy+'" stroke="'+ink+'" stroke-width="'+(major?1.2:medium?.9:.65)+'" opacity="'+(major?".9":medium?".65":".42")+'"/>');
+        if(major)parts.push('<text x="'+(L-11)+'" y="'+(yy+3.5)+'" text-anchor="end" fill="'+ink+'" font-size="11">'+v+'%</text>');
       }
       parts.push('<text x="'+(L+10)+'" y="'+(y(5)+4)+'" fill="#9f2630" font-size="12" font-style="italic" font-weight="700">'+tr("Area tidak direkomendasikan","Not recommended area")+'</text>');
       var wholeHours=Math.floor(max+1e-9),fractionalEnd=max-wholeHours>1e-6;
       var tightEnd=fractionalEnd&&x(max)-x(wholeHours)<44;
       for(var hour=0;hour<=wholeHours;hour++){
         var ev=hour,clock=fmtClock(base+ev*60),labelY=tightEnd&&hour===wholeHours?H-31:H-17;
-        parts.push('<line x1="'+x(ev)+'" y1="'+T+'" x2="'+x(ev)+'" y2="'+(H-B)+'" stroke="'+line+'" stroke-width="1" opacity=".42"/><text x="'+x(ev)+'" y="'+labelY+'" text-anchor="middle" fill="'+ink+'" font-size="10">'+clock+'</text>');
+        parts.push('<line x1="'+x(ev)+'" y1="'+T+'" x2="'+x(ev)+'" y2="'+(H-B)+'" stroke="'+line+'" stroke-width="1" opacity=".42"/><line x1="'+x(ev)+'" y1="'+(H-B)+'" x2="'+x(ev)+'" y2="'+(H-B+6)+'" stroke="'+ink+'" stroke-width="1" opacity=".8"/><text x="'+x(ev)+'" y="'+labelY+'" text-anchor="middle" fill="'+ink+'" font-size="10">'+clock+'</text>');
+      }
+      for(var minuteTick=15;minuteTick<max*60;minuteTick+=15){
+        if(minuteTick%60===0)continue;
+        var tickX=x(minuteTick/60),tickLen=minuteTick%30===0?5:3;
+        parts.push('<line x1="'+tickX+'" y1="'+(H-B)+'" x2="'+tickX+'" y2="'+(H-B+tickLen)+'" stroke="'+ink+'" stroke-width=".7" opacity=".48"/>');
       }
       if(fractionalEnd){
         var endClock=fmtClock(base+max*60);
@@ -605,6 +611,10 @@
         var path=r.points.map(function(p,j){return (j?"L":"M")+x(p.elapsed).toFixed(1)+" "+y(p.soc).toFixed(1);}).join(" ");
         parts.push('<path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" '+(d?'stroke-dasharray="'+d+'"':'')+'/>');
         var last=r.points[r.points.length-1];
+        for(var hourMark=1;hourMark<max-1e-6;hourMark++){
+          var hourlyPoint=r.points.find(function(p){return Math.abs(p.elapsed-hourMark)<1e-6;});
+          if(hourlyPoint)parts.push('<circle cx="'+x(hourlyPoint.elapsed)+'" cy="'+y(hourlyPoint.soc)+'" r="2.7" fill="'+color+'" stroke="var(--panel)" stroke-width="1"/>');
+        }
         parts.push('<circle cx="'+x(last.elapsed)+'" cy="'+y(last.soc)+'" r="4.5" fill="'+color+'" stroke="var(--panel)" stroke-width="2"/>');
       });
       parts.push('</svg>');
