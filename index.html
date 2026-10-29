@@ -325,7 +325,7 @@
     };
     var app = document.getElementById("app");
     function newTruck(name) {
-      return {name:name,type:null,series:null,model:null,batteries:[],mode:"Standard",charger:null};
+      return {name:name,type:null,series:null,model:null,batteries:[],mode:"Standard",charger:null,intensity:"High",lift:"All"};
     }
     var truckColors=["#c13e45","#3276a8","#56825e","#9b65a8","#d08c32","#438b8b"];
     function tr(id,en) { return state.lang==="id" ? id : en; }
@@ -383,16 +383,18 @@
       return state.lang==="id"&&v==="All"?"Semua ketinggian":v;
     }
     function liftOptionsFor(spec) {
-      return Array.isArray(spec.lift_options)&&spec.lift_options.length?spec.lift_options:Object.keys(CATALOG.lift_factors||{All:0.8}).map(function(name){return {name:name,factor:Number(CATALOG.lift_factors[name])};});
+      return Array.isArray(spec.lift_options)&&spec.lift_options.length?spec.lift_options:[{name:"All",factor:0.8}];
     }
+    function selectedIntensity(t) { return CATALOG.intensity_factors[t.intensity]!==undefined?t.intensity:"High"; }
+    function selectedLift(t,spec) { var options=liftOptionsFor(spec); return options.some(function(item){return item.name===t.lift;})?t.lift:options[0].name; }
     function liftFactorFor(t,spec) {
-      var option=liftOptionsFor(spec).find(function(item){return item.name===t.lift;});
+      var option=liftOptionsFor(spec).find(function(item){return item.name===selectedLift(t,spec);});
       return Number(option?option.factor:0.8);
     }
     function truckConditionInputs(config) {
       var t=config.truck,spec=config.spec;
-      var intensityButtons=Object.keys(CATALOG.intensity_factors).map(function(v){return '<button class="choice '+(t.intensity===v?"selected":"")+'" data-act="truck-intensity" data-index="'+config.index+'" data-value="'+esc(v)+'">'+esc(intensityName(v))+'</button>';}).join("");
-      var liftButtons=liftOptionsFor(spec).map(function(option){return '<button class="choice '+(t.lift===option.name?"selected":"")+'" data-act="truck-lift" data-index="'+config.index+'" data-value="'+esc(option.name)+'">'+esc(liftName(option.name))+'</button>';}).join("");
+      var intensityButtons=Object.keys(CATALOG.intensity_factors).map(function(v){return '<button class="choice '+(selectedIntensity(t)===v?"selected":"")+'" data-act="truck-intensity" data-index="'+config.index+'" data-value="'+esc(v)+'">'+esc(intensityName(v))+'</button>';}).join("");
+      var liftButtons=liftOptionsFor(spec).map(function(option){return '<button class="choice '+(selectedLift(t,spec)===option.name?"selected":"")+'" data-act="truck-lift" data-index="'+config.index+'" data-value="'+esc(option.name)+'">'+esc(liftName(option.name))+'</button>';}).join("");
       return '<div class="condition-box"><h3>'+esc(t.name)+' · '+esc(spec.model)+'</h3><div class="two-col"><div><div class="break-section-title">'+tr("Work Intensity","Work intensity")+'</div><p class="sub">'+tr("Pilih satu tingkat untuk forklift ini.","Choose one level for this forklift.")+'</p><div class="choice-row" style="margin-top:9px">'+intensityButtons+'</div></div><div><div class="break-section-title">'+tr("Lift Height","Lift height")+'</div><p class="sub">'+tr("Pilihan mengikuti katalog macro untuk model ini.","Options follow this model's macro catalog.")+'</p><div class="choice-row" style="margin-top:9px">'+liftButtons+'</div></div></div></div>';
     }
     function isIOS(){var ua=navigator.userAgent||"";return /iPhone|iPad|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);}
@@ -513,7 +515,7 @@
       var t=config.truck,spec=config.spec;
       var usable=battery.ah*(1-(battery.reserve_pct||0));
       var modeFactor=Number((spec.power_modes||{})[t.mode]||1);
-      var intensityFactor=Number(CATALOG.intensity_factors[t.intensity]||1);
+      var intensityFactor=Number(CATALOG.intensity_factors[selectedIntensity(t)]);
       var draw=spec.en_ah_per_hour*modeFactor*intensityFactor*liftFactorFor(t,spec);
       var charger=Number(t.charger===null?((spec.charger_options_a||[])[0]||0):t.charger);
       var chargeRate=Math.min(Number(battery.ah),charger)*Number(CATALOG.charge_efficiency||1);
@@ -632,7 +634,7 @@
         var selected=(spec.battery_options||[]).filter(function(b){return t.batteries.indexOf(b.ah)>=0;}).map(function(b){return fmtNum(b.ah)+" Ah";}).join(", ");
         var charger=Number(t.charger===null?((spec.charger_options_a||[])[0]||0):t.charger);
         var chargerText=charger?fmtNum(charger)+" A":tr("Tidak tercantum","Not listed");
-        return "<tr><td>"+esc(t.name)+"</td><td>"+esc(t.type||"")+" · "+esc(spec.model)+"</td><td>"+esc(modeName(t.mode))+"</td><td>"+esc(intensityName(t.intensity))+"</td><td>"+esc(liftName(t.lift))+"</td><td>"+esc(selected)+"</td><td>"+chargerText+"</td></tr>";
+        return "<tr><td>"+esc(t.name)+"</td><td>"+esc(t.type||"")+" · "+esc(spec.model)+"</td><td>"+esc(modeName(t.mode))+"</td><td>"+esc(intensityName(selectedIntensity(t)))+"</td><td>"+esc(liftName(selectedLift(t,spec)))+"</td><td>"+esc(selected)+"</td><td>"+chargerText+"</td></tr>";
       });
       return '<section class="panel report-summary"><div class="panel-head"><div><h2>'+tr("Ringkasan konfigurasi","Simulation details")+'</h2><p class="sub">'+tr("Jadwal dan pilihan forklift yang ikut disimpan di laporan.","Shift schedule and forklift choices included in the report.")+'</p></div></div><div class="stat-grid"><article class="stat"><div class="stat-label">'+tr("Target jam kerja harian","Daily workday target")+'</div><div class="stat-value">'+fmtHours(state.workdayHours)+' '+tr("jam","hours")+'</div></article></div><h3>'+tr("Jadwal shift dan break","Shift and break schedule")+'</h3><div class="report-table-wrap"><table class="report-table"><thead><tr><th>'+tr("Shift","Shift")+'</th><th>'+tr("Mulai","Start")+'</th><th>'+tr("Break dan charging","Break and charging")+'</th></tr></thead><tbody>'+shiftRows.join("")+'</tbody></table></div><h3 style="margin-top:18px">'+tr("Forklift dan baterai","Forklift and battery")+'</h3><div class="report-table-wrap"><table class="report-table"><thead><tr><th>'+tr("Unit","Unit")+'</th><th>'+tr("Tipe dan model","Type and model")+'</th><th>'+tr("Truck Mode","Truck mode")+'</th><th>'+tr("Work Intensity","Work intensity")+'</th><th>'+tr("Lift Height","Lift height")+'</th><th>'+tr("Kapasitas","Capacities")+'</th><th>'+tr("Acuan charger","Charger ref.")+'</th></tr></thead><tbody>'+truckRows.join("")+'</tbody></table></div></section>';
     }
@@ -645,7 +647,7 @@
       }
       var resultRows=results.map(function(r){
         var unit=configs.find(function(c){return c.index===r.index;});
-        return "<tr><td>"+esc(r.truckName)+" · "+esc(r.truckType)+" · "+esc(r.model)+"</td><td>"+esc(modeName(unit.truck.mode))+"</td><td>"+esc(intensityName(unit.truck.intensity))+"</td><td>"+esc(liftName(unit.truck.lift))+"</td><td>"+fmtNum(r.battery.ah)+" Ah</td><td><strong>"+fmtNum(r.end)+"%</strong></td><td>"+fmtNum(r.runtime)+" "+tr("jam","hours")+"</td></tr>";
+        return "<tr><td>"+esc(r.truckName)+" · "+esc(r.truckType)+" · "+esc(r.model)+"</td><td>"+esc(modeName(unit.truck.mode))+"</td><td>"+esc(intensityName(selectedIntensity(unit.truck)))+"</td><td>"+esc(liftName(selectedLift(unit.truck,unit.spec)))+"</td><td>"+fmtNum(r.battery.ah)+" Ah</td><td><strong>"+fmtNum(r.end)+"%</strong></td><td>"+fmtNum(r.runtime)+" "+tr("jam","hours")+"</td></tr>";
       }).join("");
       return '<article class="print-report"><header class="print-header"><img class="print-logo" src="traknus_lithium_logo.png" alt="Traknus"><div class="print-date">'+tr("Tanggal & waktu simulasi","Simulation date & time")+'<br><strong>'+date+' · '+time+'</strong></div></header><h1>'+tr("Traknus Lithium Simulator","Traknus Lithium Simulator")+'</h1><p class="print-lead">'+tr("Ringkasan berdasarkan forklift, baterai, dan jadwal kerja yang dipilih.","Summary based on the selected forklifts, batteries, and work schedule.")+'</p><section><h2>'+tr("Data customer","Customer details")+'</h2><div class="print-facts"><div class="print-fact"><span>'+tr("Perusahaan","Company")+'</span><strong>'+esc(state.customer.company)+'</strong></div><div class="print-fact"><span>'+tr("Lokasi kerja","Work location")+'</span><strong>'+esc(state.customer.location)+'</strong></div><div class="print-fact"><span>'+tr("Sales person","Salesperson")+'</span><strong>'+esc(state.customer.salesperson)+'</strong></div></div></section><section><h2>'+tr("Kondisi operasi","Operating conditions")+'</h2><div class="print-facts"><div class="print-fact"><span>'+tr("Jam operasi per hari","Operating hours per day")+'</span><strong>'+fmtHours(state.workdayHours)+' '+tr("jam","hours")+'</strong></div><div class="print-fact"><span>'+tr("Jumlah shift","Number of shifts")+'</span><strong>'+state.shiftCount+'</strong></div></div></section><section><h2>'+tr("Jadwal shift dan istirahat","Shift and break schedule")+'</h2><table class="print-table"><thead><tr><th>'+tr("Shift","Shift")+'</th><th>'+tr("Mulai","Start")+'</th><th>'+tr("Istirahat dan charging","Break and charging")+'</th></tr></thead><tbody>'+shiftRows.join("")+'</tbody></table></section><section><h2>'+tr("Perbandingan forklift dan baterai","Forklift and battery comparison")+'</h2><table class="print-table"><thead><tr><th>'+tr("Forklift / model","Forklift / model")+'</th><th>'+tr("Truck Mode","Truck mode")+'</th><th>'+tr("Work Intensity","Work intensity")+'</th><th>'+tr("Lift Height","Lift height")+'</th><th>'+tr("Baterai","Battery")+'</th><th>'+tr("Sisa setelah jadwal","Remaining after schedule")+'</th><th>'+tr("Waktu jalan terus-menerus","Continuous runtime")+'</th></tr></thead><tbody>'+resultRows+'</tbody></table></section><section class="print-chart"><h2>'+tr("Sisa baterai sepanjang jadwal","Battery level through the schedule")+'</h2><div class="chart-wrap">'+chartSvg(results,true)+'</div><div class="legend">'+results.map(function(r){return '<div class="legend-item"><span class="legend-line" style="border-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></span>'+esc(r.label)+'</div>';}).join("")+'</div>'+breakTimeline()+'</section></article>';
     }
@@ -708,7 +710,7 @@
         lines.push(tr("Shift ","Shift ")+(i+1)+": "+fmtClock(shiftStart(i)));
         state.breaks[i].forEach(function(b,j){lines.push("  "+tr("Istirahat ","Break ")+(j+1)+": "+fmtClock(breakStart(i,j))+" · "+Number(b.length||0)+" "+tr("menit","min")+" · "+(b.charge?tr("Charging","Charging"):tr("Tidak charging","Not charging")));});
       }
-      configs.forEach(function(config){lines.push(config.truck.name+" · "+config.spec.model+" · "+tr("Intensitas: ","Intensity: ")+intensityName(config.truck.intensity)+" · "+tr("Tinggi angkat: ","Lift height: ")+liftName(config.truck.lift));});
+      configs.forEach(function(config){lines.push(config.truck.name+" · "+config.spec.model+" · "+tr("Intensitas: ","Intensity: ")+intensityName(selectedIntensity(config.truck))+" · "+tr("Tinggi angkat: ","Lift height: ")+liftName(selectedLift(config.truck,config.spec)));});
       lines.push("");
       lines.push(tr("Hasil perkiraan:","Estimated results:"));
       configs.forEach(function(config){
