@@ -454,7 +454,7 @@
       var shiftCards=[];
       for(var i=0;i<state.shiftCount;i++) {
         var start=shiftStart(i), rows=state.breaks[i].map(function(b,j){
-          var presets=[5,10,15,20,25,30,45,60,90,120,180,240,480],minutes=Number(b.length||30),custom=presets.indexOf(minutes)<0;
+          var presets=[5,10,15,20,25,30,45,60,90,120,180,240,480],minutes=Number(b.length||30),custom=Boolean(b.customDuration)||presets.indexOf(minutes)<0;
           var durationOptions=presets.map(function(v){return '<option value="'+v+'" '+(minutes===v?"selected":"")+'>'+v+' '+tr("menit","min")+'</option>';}).join("");
           return '<div class="break-row"><div class="break-label">'+tr("Istirahat","Break")+' '+(j+1)+'</div><div class="break-controls"><div class="field"><label>'+tr("Mulai istirahat","Break starts")+'</label><input class="input" type="time" aria-label="'+tr("Waktu mulai istirahat "+(j+1),"Break "+(j+1)+" start time")+'" data-input="break-time" data-shift="'+i+'" data-break="'+j+'" value="'+fmtClock(breakStart(i,j))+'"></div><div class="field"><label>'+tr("Durasi (menit)","Duration (minutes)")+'</label><select class="input" data-input="break-length-preset" data-shift="'+i+'" data-break="'+j+'" aria-label="'+tr("Pilih durasi istirahat "+(j+1)+" dalam menit","Choose break "+(j+1)+" duration in minutes")+'">'+durationOptions+'<option value="custom" '+(custom?"selected":"")+'>'+tr("Lainnya · ketik menit","Other · enter minutes")+'</option></select>'+(custom?'<input class="input" style="margin-top:7px" type="number" min="1" max="1440" step="1" aria-label="'+tr("Masukkan durasi khusus dalam menit","Enter custom duration in minutes")+'" data-input="break-length" data-shift="'+i+'" data-break="'+j+'" value="'+minutes+'">':'')+'</div><div class="field"><label>'+tr("Forklift di-charge?","Charging during break?")+'</label><div class="charge-toggle"><button class="'+(!b.charge?"selected":"")+'" data-act="charge" data-shift="'+i+'" data-break="'+j+'" data-value="false">'+tr("Tidak","No")+'</button><button class="'+(b.charge?"selected":"")+'" data-act="charge" data-shift="'+i+'" data-break="'+j+'" data-value="true">'+tr("Ya","Yes")+'</button></div></div></div></div>';
         }).join("");
@@ -820,8 +820,8 @@
       else if(input==="workday-hours")state.workdayHours=Math.max(1,Math.min(24,Number(el.value)||8));
       else if(input==="shift-start"){var si=Number(el.dataset.shift);state.shiftStarts[si]=el.value;if(si===0)state.firstStart=el.value;for(var j=si+1;j<state.shiftCount;j++)state.shiftStarts[j]=null;}
       else if(input==="break-time"){var si=Number(el.dataset.shift),bi=Number(el.dataset.break);state.breaks[si][bi].start=el.value;}
-      else if(input==="break-length-preset"){var si=Number(el.dataset.shift),bi=Number(el.dataset.break);if(el.value!=="custom")state.breaks[si][bi].length=Number(el.value);}
-      else if(input==="break-length"){var si=Number(el.dataset.shift),bi=Number(el.dataset.break);state.breaks[si][bi].length=Math.max(1,Math.min(1440,Number(el.value)||1));}
+      else if(input==="break-length-preset"){var si=Number(el.dataset.shift),bi=Number(el.dataset.break);if(el.value==="custom")state.breaks[si][bi].customDuration=true;else{state.breaks[si][bi].length=Number(el.value);state.breaks[si][bi].customDuration=false;}}
+      else if(input==="break-length"){var si=Number(el.dataset.shift),bi=Number(el.dataset.break);state.breaks[si][bi].length=Math.max(1,Math.min(1440,Number(el.value)||1));state.breaks[si][bi].customDuration=true;}
       render();
     });
     document.querySelectorAll(".language-switch [data-lang]").forEach(function(button){button.addEventListener("click",function(){state.lang=button.dataset.lang;localStorage.setItem("traknus-lang",state.lang);render();});});
