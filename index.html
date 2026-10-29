@@ -464,7 +464,7 @@
     function scheduleScreen() {
       
       var html=progressView(2);
-      html+='<section class="panel"><div class="panel-head"><div><div class="eyebrow-small">'+tr("Shift schedule","Shift schedule")+'</div><h2>'+tr("Atur waktu tiap shift","Set each shift’s timing")+'</h2><p class="sub">'+tr("Setiap shift punya jam mulai dan istirahat. Durasi shift dihitung otomatis dari total jam kerja harian dibagi jumlah shift. Shift berikutnya otomatis dimulai setelah shift sebelumnya; jam mulai dapat diubah.","Each shift has a start time and break. Shift duration is calculated automatically from daily work hours divided by the number of shifts. The next shift starts after the previous one by default; you can adjust its start time.")+'</p></div></div><div class="stat-grid"><article class="stat"><div class="stat-label">'+tr("Target jam kerja harian","Daily workday target")+'</div><div class="stat-value">'+fmtHours(state.workdayHours)+' '+tr("jam","hours")+'</div></article></div>'+scheduleView()+'<div class="button-row"><button class="secondary" data-act="back-conditions">← '+tr("Ubah Working Conditions","Edit working conditions")+'</button><button class="primary" data-act="continue-trucks">'+tr("Lanjut pilih forklift","Continue to forklift selection")+' →</button></div></section>';
+      html+='<section class="panel"><div class="panel-head"><div><div class="eyebrow-small">'+tr("Shift schedule","Shift schedule")+'</div><h2>'+tr("Atur waktu tiap shift","Set each shift’s timing")+'</h2><p class="sub">'+tr("Atur jam mulai, waktu istirahat, dan charging untuk tiap shift.","Set each shift’s start time, breaks, and charging.")+'</p></div></div><div class="stat-grid"><article class="stat"><div class="stat-label">'+tr("Target jam kerja harian","Daily workday target")+'</div><div class="stat-value">'+fmtHours(state.workdayHours)+' '+tr("jam","hours")+'</div></article></div>'+scheduleView()+'<div class="button-row"><button class="secondary" data-act="back-conditions">← '+tr("Ubah Working Conditions","Edit working conditions")+'</button><button class="primary" data-act="continue-trucks">'+tr("Lanjut pilih forklift","Continue to forklift selection")+' →</button></div></section>';
       return html;
     }
     function truckScreen() {
@@ -634,7 +634,7 @@
       lines.push(tr("Jam operasi harian: ","Daily operating hours: ")+fmtHours(state.workdayHours)+" "+tr("jam","hours"));
       lines.push(tr("Jumlah shift: ","Number of shifts: ")+state.shiftCount);
       for(var i=0;i<state.shiftCount;i++){
-        lines.push(tr("Shift ","Shift ")+(i+1)+": "+fmtClock(shiftStart(i))+" · "+"");
+        lines.push(tr("Shift ","Shift ")+(i+1)+": "+fmtClock(shiftStart(i))+"");
         state.breaks[i].forEach(function(b,j){lines.push("  "+tr("Istirahat ","Break ")+(j+1)+": "+fmtClock(breakStart(i,j))+" · "+Number(b.length||0)+" "+tr("menit","min")+" · "+(b.charge?tr("Charging","Charging"):tr("Tidak charging","Not charging")));});
       }
       lines.push(tr("Intensitas: ","Intensity: ")+intensityName(state.intensity));
