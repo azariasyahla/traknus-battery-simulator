@@ -194,7 +194,7 @@
     .stat {background:var(--panel-soft);border:1px solid var(--line);border-radius:14px;padding:11px 12px;align-self:start}
     .stat-label {color:var(--muted);font-weight:750;font-size:.78rem;text-transform:uppercase;letter-spacing:.055em}
     .stat-value {font-size:1.35rem;font-weight:900;letter-spacing:-.025em;line-height:1.22;margin-top:3px}
-    .viz-filter-head {margin:14px 0 8px;font-weight:800;color:var(--ink)} .viz-filter-list {display:flex;flex-wrap:wrap;gap:9px;margin:0 0 10px} .viz-truck-option {display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:7px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel-soft);cursor:pointer;color:var(--ink)} .viz-truck-option:has(input:checked) {border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)} .viz-truck-option input {width:17px;height:17px;accent-color:var(--blue);margin:0} .viz-truck-option span {display:inline-flex;align-items:center;gap:7px} .viz-color-dot {width:10px;height:10px;border-radius:50%;display:inline-block} .viz-truck-meta {display:flex;flex-direction:column;line-height:1.2} .viz-truck-meta strong {font-size:.9rem} .viz-truck-meta small {font-size:.76rem;color:var(--muted)} .viz-filter-help {margin:0 0 10px;color:var(--muted);font-size:.88rem} .chart-wrap {overflow-x:auto}
+    .viz-filter-head {margin:14px 0 8px;font-weight:800;color:var(--ink)} .viz-filter-list {display:flex;flex-wrap:wrap;gap:9px;margin:0 0 10px} .viz-result-option {display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:7px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel-soft);cursor:pointer;color:var(--ink)} .viz-result-option:has(input:checked) {border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)} .viz-result-option input {width:17px;height:17px;accent-color:var(--blue);margin:0} .viz-result-option span {display:inline-flex;align-items:center;gap:7px} .viz-line-swatch {width:22px;height:0;border-top:3px solid;display:inline-block;flex:none} .viz-truck-meta {display:flex;flex-direction:column;line-height:1.2} .viz-truck-meta strong {font-size:.9rem} .viz-truck-meta small {font-size:.76rem;color:var(--muted)} .viz-filter-help {margin:0 0 10px;color:var(--muted);font-size:.88rem} .chart-wrap {overflow-x:auto}
     .chart {display:block;width:100%;min-width:590px;height:auto;font-family:Aptos,Arial,sans-serif}
     .legend {display:flex;flex-wrap:wrap;gap:10px 16px;margin:12px 0 2px}
     .legend-item {display:flex;align-items:center;gap:7px;color:var(--muted);font-size:.84rem;font-weight:750}
@@ -321,7 +321,7 @@
       customer:{company:"",location:"",salesperson:""}, customerError:"",
       trucks:[newTruck("Forklift 1")],
       workdayHours:8, shiftCount:1, shiftLengths:[], scheduleConfigKey:null,
-      firstStart:"08:00", shiftStarts:[], breaks:[[]], intensity:"High", lift:"All", visualTruckIndexes:null, visualTruckIndexes:null
+      firstStart:"08:00", shiftStarts:[], breaks:[[]], intensity:"High", lift:"All", visualResultKeys:null
     };
     var app = document.getElementById("app");
     function newTruck(name) {
@@ -723,24 +723,26 @@
       }
     }
 
-    function visualTruckPicker(configs,selected) {
-      return '<div class="viz-filter-head">'+tr("Tampilkan forklift","Choose forklifts to show")+'</div><div class="viz-filter-list">'+configs.map(function(c){var checked=selected.indexOf(c.index)>=0;return '<label class="viz-truck-option"><input type="checkbox" data-input="viz-truck" data-index="'+c.index+'" '+(checked?"checked":"")+'><span><i class="viz-color-dot" style="background:'+truckColors[c.index%truckColors.length]+'"></i><span class="viz-truck-meta"><strong>'+esc(c.truck.name)+'</strong><small>'+esc(c.spec.model)+' · '+(c.truck.type==="CB"?"CB":"WH")+'</small></span></span></label>';}).join("")+'</div><p class="viz-filter-help">'+tr("Semua forklift tampil saat awal. Hilangkan centang untuk menyembunyikan garis dan ringkasannya.","All forklifts are shown initially. Uncheck a truck to hide its lines and summary.")+'</p>';
+
+    function visualResultKey(r) { return String(r.index)+"|"+String(r.battery.ah); }
+    function visualResultPicker(results,selected) {
+      return '<div class="viz-filter-head">'+tr("Pilih forklift & kapasitas yang ingin ditampilkan","Choose forklift and battery options to show")+'</div><div class="viz-filter-list">'+results.map(function(r){var key=visualResultKey(r),checked=selected.indexOf(key)>=0;return '<label class="viz-result-option"><input type="checkbox" data-input="viz-result" data-index="'+r.index+'" data-ah="'+r.battery.ah+'" '+(checked?"checked":"")+'><span><i class="viz-line-swatch" style="border-top-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></i><span class="viz-truck-meta"><strong>'+esc(r.truckName)+'</strong><small>'+esc(r.model)+' · '+fmtNum(r.battery.ah)+' Ah</small></span></span></label>';}).join("")+'</div><p class="viz-filter-help">'+tr("Semua opsi kapasitas tampil di awal. Hilangkan centang untuk menyembunyikan garis dan ringkasannya.","All battery options are shown initially. Uncheck an option to hide its line and summary.")+'</p>';
     }
     function analysisScreen() {
       var configs=allConfigs(), results=[];
-      if(!Array.isArray(state.visualTruckIndexes)) state.visualTruckIndexes=configs.map(function(c){return c.index;});
       configs.forEach(function(c){
         var selected=(c.spec.battery_options||[]).filter(function(b){return c.truck.batteries.indexOf(b.ah)>=0;});
         selected.forEach(function(b,batteryIndex){var result=simulate(c,b);result.batteryIndex=batteryIndex;results.push(result);});
       });
-      var visibleResults=results.filter(function(r){return state.visualTruckIndexes.indexOf(r.index)>=0;});
+      if(!Array.isArray(state.visualResultKeys)) state.visualResultKeys=results.map(visualResultKey);
+      var visibleResults=results.filter(function(r){return state.visualResultKeys.indexOf(visualResultKey(r))>=0;});
       var html=progressView(4);
       html+='<div class="button-row" style="margin:0 0 14px"><div><div class="eyebrow-small">'+tr("Analisis operasional","Operating analysis")+'</div><h2 style="margin:0;font-size:1.45rem">'+tr("Lihat perubahan sisa baterai","See the battery level change")+'</h2></div><button class="secondary" data-act="start-over">↺ '+tr("Kembali ke awal","Return to start")+'</button></div>';
       html+='<section class="panel"><div class="panel-head"><div><h2>'+tr("Kondisi kerja untuk grafik","Work conditions for the chart")+'</h2><p class="sub">'+tr("Pilih kondisi kerja; grafik sisa baterai langsung diperbarui.","Choose the work conditions; the battery remaining graph updates immediately.")+'</p></div></div><div class="conditions"><div class="condition-box"><h3>'+tr("Work Intensity","Work intensity")+'</h3><p class="sub">'+tr("Seberapa berat pola penggunaan truk.","How demanding the truck usage is.")+'</p><select class="input" data-input="intensity-select" aria-label="'+tr("Pilih intensitas kerja","Choose work intensity")+'">'+Object.keys(CATALOG.intensity_factors).map(function(v){return '<option value="'+esc(v)+'" '+(state.intensity===v?"selected":"")+'>'+esc(intensityName(v))+'</option>';}).join("")+'</select><div class="choice-row">'+Object.keys(CATALOG.intensity_factors).map(function(v){return '<button class="choice '+(state.intensity===v?"selected":"")+'" data-act="intensity" data-value="'+esc(v)+'">'+esc(intensityName(v))+'</button>';}).join("")+'</div></div><div class="condition-box"><h3>'+tr("Lift Height","Lift height")+'</h3><p class="sub">'+tr("Pilih rentang tinggi angkat yang sesuai.","Choose the matching lifting-height range.")+'</p><select class="input" data-input="lift-select" aria-label="'+tr("Pilih ketinggian angkat","Choose lift height")+'">'+Object.keys(CATALOG.lift_factors).map(function(v){return '<option value="'+esc(v)+'" '+(state.lift===v?"selected":"")+'>'+esc(liftName(v))+'</option>';}).join("")+'</select><div class="choice-row">'+Object.keys(CATALOG.lift_factors).map(function(v){return '<button class="choice '+(state.lift===v?"selected":"")+'" data-act="lift" data-value="'+esc(v)+'">'+esc(liftName(v))+'</button>';}).join("")+'</div></div></div></section>';
       if(!results.length) return html+'<section class="panel"><div class="inline-note">'+tr("Belum ada kapasitas yang dipilih. Kembali dan pilih minimal satu baterai.","No battery capacity selected. Go back and select at least one battery.")+'</div></section>';
       html+=reportSummary(configs);
       html+='<section class="panel"><div class="panel-head"><div><h2><strong>'+tr("Visualisasi","Visualization")+'</strong> · '+tr("Sisa baterai sepanjang jadwal","Battery remaining through the schedule")+'</h2><p class="sub">'+tr("Perkiraan sisa baterai dari awal hingga akhir jadwal kerja.","Estimated battery remaining from the start to the end of the work schedule.")+'</p></div><span class="info-pill">'+state.shiftCount+' '+shiftWord(state.shiftCount)+' · '+fmtHours(state.workdayHours)+' '+tr("jam/hari","hours/day")+'</span></div>';
-      html+=visualTruckPicker(configs,state.visualTruckIndexes);
+      html+=visualResultPicker(results,state.visualResultKeys);
       html+='<div class="chart-wrap">'+chartSvg(visibleResults)+'</div><div class="legend">'+visibleResults.map(function(r){return '<div class="legend-item"><span class="legend-line" style="border-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></span>'+esc(r.label)+'</div>';}).join("")+'</div>';
       html+='<p class="chart-caption">'+tr("Warna garis menandai forklift; pola garis membedakan kapasitas baterai.","Line colors identify forklifts; line patterns distinguish battery capacities.")+'</p>'+breakTimeline()+'</section>';
       html+='<section class="panel"><div class="panel-head"><div><h2>'+tr("Ringkasan tiap pilihan baterai","Summary for each battery option")+'</h2><p class="sub">'+tr("Lihat sisa baterai di akhir jadwal dan perkiraan waktu kerja nonstop.","See the remaining battery at the end of the schedule and estimated nonstop runtime.")+'</p></div></div><div class="stat-grid">'+visibleResults.map(function(r){return '<article class="stat"><div class="stat-label">'+esc(r.label)+'</div><div class="stat-value">'+fmtNum(r.end)+'% <span style="font-size:.72rem;color:var(--muted)">'+tr("Sisa akhir jadwal","remaining at end")+'</span></div><div class="sub" style="margin-top:6px">'+tr("Nonstop","Nonstop")+': <strong>'+fmtNum(r.runtime)+' '+tr("jam","hours")+'</strong></div></article>';}).join("")+'</div>';
@@ -800,7 +802,7 @@
       else if(act==="continue-trucks")state.screen="trucks";
       else if(act==="back-conditions")state.screen="conditions";
       else if(act==="back-schedule")state.screen="schedule";
-      else if(act==="back-trucks"){state.visualTruckIndexes=null;state.screen="trucks";}
+      else if(act==="back-trucks"){state.visualResultKeys=null;state.screen="trucks";}
       else if(act==="add-break"){var si=Number(b.dataset.shift);state.breaks[si].push({start:null,length:defaultBreakMinutes(si),charge:false});}
       else if(act==="charge"){var si=Number(b.dataset.shift),bi=Number(b.dataset.break);state.breaks[si][bi].charge=b.dataset.value==="true";}
       else if(act==="intensity")state.intensity=b.dataset.value;
@@ -817,7 +819,7 @@
     app.addEventListener("change",function(e){
       var el=e.target,input=el.dataset.input;if(!input)return;
       var slot=el.dataset.slot,t=slot?state.trucks[Number(slot.slice(1))-1]:null;
-      if(input==="viz-truck"){var vi=Number(el.dataset.index);if(!el.checked&&state.visualTruckIndexes.length<=1)state.visualTruckIndexes=[vi];else state.visualTruckIndexes=el.checked?(state.visualTruckIndexes.indexOf(vi)>=0?state.visualTruckIndexes:state.visualTruckIndexes.concat([vi])):state.visualTruckIndexes.filter(function(index){return index!==vi;});}
+      if(input==="viz-result"){var key=String(el.dataset.index)+"|"+String(el.dataset.ah);if(!el.checked&&state.visualResultKeys.length<=1)state.visualResultKeys=[key];else state.visualResultKeys=el.checked?(state.visualResultKeys.indexOf(key)>=0?state.visualResultKeys:state.visualResultKeys.concat([key])):state.visualResultKeys.filter(function(item){return item!==key;});}
       else if(input==="truck-type"&&t){t.type=el.value||null;t.series=null;t.model=null;t.batteries=[];t.charger=null;t.mode="Standard";}
       else if(input==="truck-series"&&t){t.series=el.value||null;t.model=null;t.batteries=[];t.charger=null;}
       else if(input==="truck-model"&&t){t.model=el.value||null;if(t.model){var spec=CATALOG.models.find(function(m){return m.model===t.model;});t.batteries=(spec.battery_options||[]).map(function(x){return x.ah;});t.charger=(spec.charger_options_a||[])[0]||0;if(!Object.keys(spec.power_modes||{}).includes(t.mode))t.mode="Standard";}else t.batteries=[];}
