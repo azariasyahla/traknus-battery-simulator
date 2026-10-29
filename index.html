@@ -50,13 +50,13 @@
     .hero-badge {flex:0 0 auto;border:1px solid rgba(69,103,113,.2);background:rgba(255,255,255,.58);padding:10px 14px;border-radius:14px;font-weight:800;color:#405c67;font-size:.9rem}
 
     /* Traknus red-and-navy hero with a real forklift photo */
-    .hero {position:relative;overflow:hidden;align-items:center;justify-content:center;gap:12px;text-align:left;min-height:174px;padding:16px 22px;background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
+    .hero {position:relative;overflow:hidden;align-items:center;justify-content:center;gap:12px;text-align:left;min-height:214px;padding:20px 30px;background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
     .hero:after {content:"";position:absolute;right:29%;top:-28%;width:20%;height:160%;background:rgba(255,255,255,.08);transform:skewX(-34deg);pointer-events:none}
     [data-theme="dark"] .hero {background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
-    .hero-copy {position:relative;z-index:1;width:min(58%,600px);max-width:600px;flex:0 1 600px;text-align:left}
-    .hero h1 {color:#fff;font-size:clamp(1.8rem,3.1vw,2.35rem);letter-spacing:0}
+    .hero-copy {position:relative;z-index:1;width:min(60%,700px);max-width:700px;flex:0 1 700px;text-align:left}
+    .hero h1 {color:#fff;font-size:clamp(2.2rem,4vw,3.1rem);letter-spacing:0}
     .hero p,[data-theme="dark"] .hero p {color:#e0e8fa}
-    .hero-machine {position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:min(35%,340px);height:154px;justify-content:flex-end;padding:0;background:transparent;border-radius:0;box-shadow:none}
+    .hero-machine {position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:min(40%,420px);height:190px;justify-content:flex-end;padding:0;background:transparent;border-radius:0;box-shadow:none}
     .hero-forklift {display:block;width:100%;height:100%;object-fit:contain}
     .customer-block {margin:22px 0 18px;padding:17px;border:1px solid var(--line);border-radius:16px;background:var(--panel-soft)}
     .customer-block h3 {margin:0 0 4px}
@@ -73,18 +73,18 @@
       .panel h3,.section-title {font-size:1.08rem}
     }
     @media (max-width:760px) {
-      .hero {flex-direction:row;align-items:center;padding:19px;min-height:158px;gap:12px}
+      .hero {flex-direction:row;align-items:center;padding:19px;min-height:184px;gap:12px}
       .hero-copy {max-width:62%}
-      .hero-machine {width:35%;height:105px;padding:0}
+      .hero-machine {width:38%;height:132px;padding:0}
       .customer-grid {grid-template-columns:1fr}
       .type-card {min-height:102px}
       .truck-photo-wrap {flex-basis:83px;width:83px;height:70px}
     }
     @media (max-width:480px) {
-      .hero {padding:15px;gap:8px;min-height:142px}
-      .hero h1 {font-size:1.5rem}
+      .hero {padding:15px;gap:8px;min-height:158px}
+      .hero h1 {font-size:1.7rem}
       .hero p {font-size:.84rem}
-      .hero-machine {height:86px;width:34%}
+      .hero-machine {height:106px;width:36%}
       .type-card {padding:9px;gap:9px}
       .truck-photo-wrap {flex-basis:72px;width:72px;height:64px}
     }
@@ -180,6 +180,7 @@
     .welcome-step-number {display:grid;place-items:center;width:32px;height:32px;line-height:1;border-radius:50%;background:var(--blue-soft);color:var(--blue);font-weight:900;margin-bottom:9px}
     .welcome-step strong {display:block;margin-bottom:3px}
     .welcome-step > span:not(.welcome-step-number) {display:block;color:var(--muted);font-size:.88rem}
+    .share-icon {width:18px;height:18px;vertical-align:-4px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-right:6px}
     .print-hint {color:var(--muted);font-size:.84rem;margin-top:7px}
     .button-row {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:11px;margin-top:17px}
     .button-group {display:flex;gap:9px;flex-wrap:wrap}
@@ -284,8 +285,8 @@
     .customer-summary {margin:14px 0 18px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:var(--panel-soft)}
     .customer-summary h3 {margin:0 0 5px}.customer-summary p {margin:0;color:var(--muted);font-size:.9rem}.print-fact strong {overflow-wrap:anywhere}
 
-    @media (max-width:760px) { .hero {flex-direction:row;align-items:center;padding:19px;min-height:158px;gap:12px}.hero-copy {max-width:62%}.hero-machine {width:35%;height:105px;padding:0}.customer-grid {grid-template-columns:1fr}.type-card {min-height:102px}.truck-photo-wrap {flex-basis:83px;width:83px;height:70px} }
-    @media (max-width:480px) { .hero {padding:15px;gap:8px;min-height:142px}.hero h1 {font-size:1.5rem}.hero p {font-size:.84rem}.hero-machine {height:86px;width:34%}.type-card {padding:9px;gap:9px}.truck-photo-wrap {flex-basis:72px;width:72px;height:64px} }
+    @media (max-width:760px) { .hero {flex-direction:row;align-items:center;padding:19px;min-height:184px;gap:12px}.hero-copy {max-width:62%}.hero-machine {width:38%;height:132px;padding:0}.customer-grid {grid-template-columns:1fr}.type-card {min-height:102px}.truck-photo-wrap {flex-basis:83px;width:83px;height:70px} }
+    @media (max-width:480px) { .hero {padding:15px;gap:8px;min-height:158px}.hero h1 {font-size:1.7rem}.hero p {font-size:.84rem}.hero-machine {height:106px;width:36%}.type-card {padding:9px;gap:9px}.truck-photo-wrap {flex-basis:72px;width:72px;height:64px} }
 </style>
 </head>
 <body>
@@ -391,27 +392,27 @@
     }
     function typePicker(t,slot) {
       var selected=t.type,photoCB=selected==="CB"&&t.model?truckPhotoFor(t.model,"CB"):TRAKNUS_CB_FORKLIFT_IMAGE,photoWH=selected==="WH"&&t.model?truckPhotoFor(t.model,"WH"):TRAKNUS_WH_FORKLIFT_IMAGE;
-      return '<div class="field"><label>'+tr("1 · Pilih tipe forklift","1 · Choose forklift type")+'</label><select class="input" data-input="truck-type" data-slot="'+slot+'" aria-label="'+tr("Pilih tipe forklift","Choose forklift type")+'"><option value="">'+tr("Pilih tipe","Choose type")+'</option><option value="CB" '+(selected==="CB"?"selected":"")+'>CB · Counterbalance</option><option value="WH" '+(selected==="WH"?"selected":"")+'>WH · Warehouse</option></select></div><div class="type-grid">'+
+      return '<div class="field"><label>'+tr("1 · Pilih tipe forklift","1 · Choose forklift type")+'</label></div><div class="type-grid">'+
         '<button class="type-card cb '+(selected==="CB"?"selected":"")+'" data-act="type" data-slot="'+slot+'" data-value="CB"><span class="truck-photo-wrap"><img class="truck-photo" src="'+photoCB+'" alt="Toyota counterbalance forklift from Traktor Nusantara"></span><span><span class="type-label">CB · Counterbalance</span><span class="type-detail">'+tr("Truk counterbalance","Counterbalance forklift")+'</span></span></button>'+
         '<button class="type-card wh '+(selected==="WH"?"selected":"")+'" data-act="type" data-slot="'+slot+'" data-value="WH"><span class="truck-photo-wrap"><img class="truck-photo" src="'+photoWH+'" alt="Forklift photographed in a warehouse"></span><span><span class="type-label">WH · Warehouse</span><span class="type-detail">'+tr("Truk gudang / warehouse","Warehouse forklift")+'</span></span></button></div>';
     }
     function modePicker(t,slot) {
       var modes=[["Economy",tr("Lebih hemat energi","Lower energy use")],["Standard",tr("Pemakaian standar","Standard use")],["Power",tr("Daya kerja tinggi","Higher working power")],["High Power",tr("Daya kerja maksimal","Maximum working power")]];
-      return '<select class="input" data-input="truck-mode" data-slot="'+slot+'" aria-label="'+tr("Pilih Truck Mode","Choose truck mode")+'">'+modes.map(function(m){return '<option value="'+esc(m[0])+'" '+(t.mode===m[0]?"selected":"")+'>'+modeName(m[0])+'</option>';}).join("")+'</select><div class="mode-grid">'+modes.map(function(m){return '<button class="mode-card '+(t.mode===m[0]?"selected":"")+'" data-act="mode" data-slot="'+slot+'" data-value="'+m[0]+'"><strong>'+modeName(m[0])+'</strong><span>'+m[1]+'</span></button>';}).join("")+'</div>';
+      return '<div class="mode-grid">'+modes.map(function(m){return '<button class="mode-card '+(t.mode===m[0]?"selected":"")+'" data-act="mode" data-slot="'+slot+'" data-value="'+m[0]+'"><strong>'+modeName(m[0])+'</strong><span>'+m[1]+'</span></button>';}).join("")+'</div>';
     }
     function modelStep(t,slot) {
       var html="";
       if(!t.type) return '<div class="inline-note">'+tr("Pilih tipe dulu. Seri dan model baru muncul setelahnya.","Choose a truck type first. Series and model will appear next.")+'</div>';
       var avail=modelsForType(t.type);
       var seriesList=Array.from(new Set(avail.map(function(m){return seriesOf(m.model);}))).sort(function(a,b){return a.localeCompare(b,undefined,{numeric:true});});
-      html+='<div class="field"><label>'+tr("2 · Pilih seri","2 · Choose a series")+'</label><select class="input" data-input="truck-series" data-slot="'+slot+'" aria-label="'+tr("Pilih seri forklift","Choose forklift series")+'"><option value="">'+tr("Pilih seri","Choose series")+'</option>'+seriesList.map(function(s){return '<option value="'+esc(s)+'" '+(t.series===s?"selected":"")+'>'+esc(s)+'</option>';}).join("")+'</select><div class="choice-row">'+seriesList.map(function(s){return '<button class="choice '+(t.series===s?"selected":"")+'" data-act="series" data-slot="'+slot+'" data-value="'+esc(s)+'">'+esc(s)+'</button>';}).join("")+'</div></div>';
+      html+='<div class="field"><label>'+tr("2 · Pilih seri","2 · Choose a series")+'</label><div class="choice-row">'+seriesList.map(function(s){return '<button class="choice '+(t.series===s?"selected":"")+'" data-act="series" data-slot="'+slot+'" data-value="'+esc(s)+'">'+esc(s)+'</button>';}).join("")+'</div></div>';
       if(!t.series) return html;
       var same=avail.filter(function(m){return seriesOf(m.model)===t.series;});
-      html+='<div class="field" style="margin-top:15px"><label>'+tr("3 · Pilih model forklift","3 · Choose a forklift model")+'</label><select class="input" data-input="truck-model" data-slot="'+slot+'" aria-label="'+tr("Pilih model forklift","Choose forklift model")+'"><option value="">'+tr("Pilih model","Choose model")+'</option>'+same.map(function(m){return '<option value="'+esc(m.model)+'" '+(t.model===m.model?"selected":"")+'>'+esc(m.model)+'</option>';}).join("")+'</select><div class="model-grid">'+same.map(function(m){var photo=truckPhotoFor(m.model,t.type);return '<button class="model-card '+(t.model===m.model?"selected":"")+'" data-act="model" data-slot="'+slot+'" data-value="'+esc(m.model)+'"><span class="model-photo-wrap"><img class="model-photo" src="'+photo+'" alt="'+esc(m.model)+' forklift"></span><span class="model-name">'+esc(m.model)+'</span></button>';}).join("")+'</div></div>';
+      html+='<div class="field" style="margin-top:15px"><label>'+tr("3 · Pilih model forklift","3 · Choose a forklift model")+'</label><div class="model-grid">'+same.map(function(m){var photo=truckPhotoFor(m.model,t.type);return '<button class="model-card '+(t.model===m.model?"selected":"")+'" data-act="model" data-slot="'+slot+'" data-value="'+esc(m.model)+'"><span class="model-photo-wrap"><img class="model-photo" src="'+photo+'" alt="'+esc(m.model)+' forklift"></span><span class="model-name">'+esc(m.model)+'</span></button>';}).join("")+'</div></div>';
       if(!t.model) return html;
       var spec=CATALOG.models.find(function(m){return m.model===t.model;});
       var batteryOptions=spec.battery_options||[];
-      html+='<div class="field" style="margin-top:15px"><label>'+tr("4 · Pilih kapasitas untuk dibandingkan","4 · Choose capacities to compare")+'</label><details class="dropdown-checks"><summary>'+tr("Pilih kapasitas baterai","Choose battery options")+' · '+t.batteries.length+' '+tr("dipilih","selected")+'</summary><div class="dropdown-options">'+batteryOptions.map(function(b){return '<label class="dropdown-option"><input type="checkbox" data-input="truck-battery" data-slot="'+slot+'" data-value="'+b.ah+'" '+(t.batteries.indexOf(b.ah)>=0?"checked":"")+'><span>'+fmtNum(b.ah)+' Ah</span></label>';}).join("")+'</div></details><div class="caps">'+batteryOptions.map(function(b){var selected=t.batteries.indexOf(b.ah)>=0;return '<button class="cap '+(selected?"selected":"")+'" data-act="battery" data-slot="'+slot+'" data-value="'+b.ah+'"><span class="checkmark"></span>'+fmtNum(b.ah)+' Ah</button>';}).join("")+'</div><p class="sub" style="margin-top:7px">'+tr("Klik satu atau beberapa kapasitas. Grafik nanti membandingkan baterai yang dicentang.","Select one or more capacities. The chart will compare the checked batteries.")+'</p></div>';
+      html+='<div class="field" style="margin-top:15px"><label>'+tr("4 · Pilih kapasitas untuk dibandingkan","4 · Choose capacities to compare")+'</label><div class="caps">'+batteryOptions.map(function(b){var selected=t.batteries.indexOf(b.ah)>=0;return '<button class="cap '+(selected?"selected":"")+'" data-act="battery" data-slot="'+slot+'" data-value="'+b.ah+'"><span class="checkmark"></span>'+fmtNum(b.ah)+' Ah</button>';}).join("")+'</div><p class="sub" style="margin-top:7px">'+tr("Klik satu atau beberapa kapasitas. Grafik nanti membandingkan baterai yang dicentang.","Select one or more capacities. The chart will compare the checked batteries.")+'</p></div>';
       if(spec.catalog_note) html+='<div class="inline-note" style="margin-top:10px">'+tr("Acuan RRE: kapasitas bergantung pada kompartemen baterai. Cocokkan konfigurasi unit sebelum dipakai untuk rekomendasi customer.","RRE reference: battery capacity depends on the battery compartment. Confirm the truck configuration before making customer recommendations.")+'</div>';
       var chargers=(spec.charger_options_a||[]).map(Number).filter(function(a){return a>0;});
       html+='<div class="inline-note" style="margin-top:14px">'+(chargers.length?tr("Acuan charger pada data model: ","Charger reference in model data: ")+fmtNum(chargers[0])+" A ("+tr("ampere","amps")+"). "+tr("Arus ini dipakai saat kamu pilih Ya untuk waktu istirahat.","This current is used when you choose Yes for a break."):tr("Data arus charger tidak tercantum untuk model ini. Pilihan Ya saat istirahat tidak menambah daya pada simulasi.","Charger current is not listed for this model. Choosing Yes for a break will not add charge in the estimate."))+'</div>';
@@ -736,7 +737,7 @@
       html+='<div class="chart-wrap">'+chartSvg(results)+'</div><div class="legend">'+results.map(function(r){return '<div class="legend-item"><span class="legend-line" style="border-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></span>'+esc(r.label)+'</div>';}).join("")+'</div>';
       html+='<p class="chart-caption">'+tr("Warna garis menandai forklift; pola garis membedakan kapasitas baterai.","Line colors identify forklifts; line patterns distinguish battery capacities.")+'</p>'+breakTimeline()+'</section>';
       html+='<section class="panel"><div class="panel-head"><div><h2>'+tr("Ringkasan tiap pilihan baterai","Summary for each battery option")+'</h2><p class="sub">'+tr("Lihat sisa baterai di akhir jadwal dan perkiraan waktu kerja nonstop.","See the remaining battery at the end of the schedule and estimated nonstop runtime.")+'</p></div></div><div class="stat-grid">'+results.map(function(r){return '<article class="stat"><div class="stat-label">'+esc(r.label)+'</div><div class="stat-value">'+fmtNum(r.end)+'% <span style="font-size:.72rem;color:var(--muted)">'+tr("Sisa di akhir jadwal","remaining after schedule")+'</span></div><div class="sub" style="margin-top:6px">'+tr("Perkiraan kerja nonstop","Estimated nonstop runtime")+': <strong>'+fmtNum(r.runtime)+' '+tr("jam","hours")+'</strong></div></article>';}).join("")+'</div>';
-      html+='<div class="button-row"><div><div class="sub">'+tr("Estimasi mengikuti faktor dari data model; kondisi lapangan dapat berbeda.","Estimates follow the model data; actual results may vary with operating conditions.")+'</div><div class="print-hint">'+(isIOS()?tr("Di iPhone/iPad: pada pratinjau cetak, ketuk Share lalu Save to Files.","On iPhone/iPad: in print preview, tap Share, then Save to Files."):tr("Pilih “Simpan sebagai PDF” pada jendela cetak.","Choose “Save as PDF” in the print window."))+'</div><div class="print-hint">'+tr("Email membuka draft. Grafik PNG terlampir jika perangkat mendukung berbagi; jika tidak, file PNG diunduh untuk dilampirkan. Masukkan penerima lalu tekan Kirim.","Email opens a draft. The chart PNG is attached when supported; otherwise it downloads for manual attachment. Add a recipient and press Send.")+'</div></div><div class="button-group"><button class="secondary" data-act="back-trucks">← '+tr("Ubah pilihan forklift","Edit forklift choices")+'</button><button class="primary" data-act="print">⌑ '+tr("Cetak / simpan PDF","Print / save PDF")+'</button><button class="secondary" data-act="email-report">'+tr("Email","Email")+'</button></div></div></section>';
+      html+='<div class="button-row"><div><div class="sub">'+tr("Estimasi mengikuti faktor dari data model; kondisi lapangan dapat berbeda.","Estimates follow the model data; actual results may vary with operating conditions.")+'</div><div class="print-hint">'+(isIOS()?tr("Di iPhone/iPad: pada pratinjau cetak, ketuk Share lalu Save to Files.","On iPhone/iPad: in print preview, tap Share, then Save to Files."):tr("Pilih “Simpan sebagai PDF” pada jendela cetak.","Choose “Save as PDF” in the print window."))+'</div><div class="print-hint">'+tr("Pilih aplikasi berbagi yang tersedia, lalu periksa penerima dan tekan Kirim.","Choose an available sharing app, then check the recipient and press Send.")+'</div></div><div class="button-group"><button class="secondary" data-act="back-trucks">← '+tr("Ubah pilihan forklift","Edit forklift choices")+'</button><button class="primary" data-act="print">⌑ '+tr("Cetak / simpan PDF","Print / save PDF")+'</button><button class="secondary" data-act="email-report"><svg class="share-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.7 10.7l6.6-4.4M8.7 13.3l6.6 4.4"></path></svg>'+tr("Bagikan","Share")+'</button></div></div></section>';
       html+=printReport(configs,results);
       return html;
     }
