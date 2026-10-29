@@ -729,7 +729,6 @@
     function analysisScreen() {
       var configs=allConfigs(), results=[];
       if(!Array.isArray(state.visualTruckIndexes)) state.visualTruckIndexes=configs.map(function(c){return c.index;});
-      else { state.visualTruckIndexes=state.visualTruckIndexes.filter(function(index){return configs.some(function(c){return c.index===index;});}); configs.forEach(function(c){if(state.visualTruckIndexes.indexOf(c.index)<0)state.visualTruckIndexes.push(c.index);}); }
       configs.forEach(function(c){
         var selected=(c.spec.battery_options||[]).filter(function(b){return c.truck.batteries.indexOf(b.ah)>=0;});
         selected.forEach(function(b,batteryIndex){var result=simulate(c,b);result.batteryIndex=batteryIndex;results.push(result);});
