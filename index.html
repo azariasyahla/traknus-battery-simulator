@@ -23,7 +23,7 @@
       --amber:#e1b469; --amber-soft:#44382b; --shadow:0 12px 34px rgba(0,0,0,.20);
     }
     * {box-sizing:border-box}
-    body {margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Times New Roman",Times,serif}
+    body {margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Aptos,Arial,sans-serif}
     button,input,select {font:inherit}
     button {color:inherit}
     .shell {max-width:1160px;margin:auto;padding:22px 24px 54px}
@@ -162,7 +162,7 @@
     .break-controls {display:grid;grid-template-columns:1fr .8fr auto;gap:8px;align-items:end}
     .charge-toggle {display:flex;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:3px;height:44px}
     .charge-toggle button {border:0;border-radius:7px;background:transparent;padding:0 10px;font-weight:750;color:var(--muted);cursor:pointer}
-    .charge-toggle button.selected {background:var(--green-soft);color:var(--green)}
+    .charge-toggle button.selected {background:var(--green-soft);color:var(--green);box-shadow:inset 0 0 0 2px var(--green);font-weight:850}
     .small-btn {border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:7px 10px;font-size:.82rem;font-weight:750;cursor:pointer}
     .small-btn:hover {border-color:var(--blue)}
     .primary,.secondary {border:0;border-radius:13px;padding:13px 18px;font-weight:850;cursor:pointer;transition:.15s ease}
@@ -534,7 +534,7 @@
       return {label:t.name+" · "+spec.model+" · "+fmtNum(battery.ah)+" Ah",truckName:t.name,model:spec.model,truckType:t.type,points:points,draw:draw,usable:usable,runtime:draw?usable/draw:0,min:min,end:end,chargeRate:chargeRate,threshold:threshold,soft:soft?soft.elapsed:null,depleted:min<=.01,battery:battery,index:config.index};
     }
     function chartSvg(results,forPrint) {
-      var W=840,H=360,L=58,R=20,T=18,B=48,iw=W-L-R,ih=H-T-B;
+      var W=840,H=372,L=72,R=20,T=18,B=60,iw=W-L-R,ih=H-T-B;
       var max=0;
       for(var i=0;i<results.length;i++) max=Math.max(max,results[i].points[results[i].points.length-1].elapsed);
       max=Math.max(max,.25);
@@ -553,10 +553,10 @@
         if(x1-x0<1)return;
         var fill=b.charge?"#347b65":"#929fa3";
         var title=tr("Shift ","Shift ")+(si+1)+" · "+fmtClock(start)+"–"+fmtClock(start+Number(b.length||0))+" · "+(b.charge?tr("charging","charging"):tr("tidak charging","not charging"));
-        parts.push('<g><title>'+esc(title)+'</title><rect x="'+x0.toFixed(1)+'" y="'+T+'" width="'+(x1-x0).toFixed(1)+'" height="'+ih+'" rx="3" fill="'+fill+'" opacity=".16"/></g>');
+        parts.push('<g><title>'+esc(title)+'</title><rect x="'+x0.toFixed(1)+'" y="'+T+'" width="'+(x1-x0).toFixed(1)+'" height="'+ih+'" rx="3" fill="'+fill+'" opacity=".28" stroke="'+fill+'" stroke-width="1.4" stroke-opacity=".75"/></g>');
       });
-      for(var v=0;v<=100;v+=5){
-        var major=v%10===0;
+      for(var v=0;v<=100;v+=10){
+        var major=true;
         parts.push('<line x1="'+L+'" y1="'+y(v)+'" x2="'+(W-R)+'" y2="'+y(v)+'" stroke="'+line+'" stroke-width="'+(major?"1":".7")+'" opacity="'+(major?".7":".34")+'"/><text x="'+(L-9)+'" y="'+(y(v)+3.5)+'" text-anchor="end" fill="'+ink+'" font-size="10">'+v+'%</text>');
       }
       var wholeHours=Math.floor(max+1e-9),fractionalEnd=max-wholeHours>1e-6;
@@ -569,6 +569,8 @@
         var endClock=fmtClock(base+max*60);
         parts.push('<line x1="'+x(max)+'" y1="'+T+'" x2="'+x(max)+'" y2="'+(H-B)+'" stroke="'+line+'" stroke-width="1" opacity=".58"/><text x="'+x(max)+'" y="'+(H-17)+'" text-anchor="middle" fill="'+ink+'" font-size="10">'+endClock+'</text>');
       }
+      parts.push('<text x="18" y="'+(T+ih/2)+'" transform="rotate(-90 18 '+(T+ih/2)+')" text-anchor="middle" fill="'+ink+'" font-size="11" font-weight="700">'+tr("State of charge (SOC)","State of charge (SOC)")+'</text>');
+      parts.push('<text x="'+(L+iw/2)+'" y="'+(H-4)+'" text-anchor="middle" fill="'+ink+'" font-size="11" font-weight="700">'+tr("Time","Waktu")+'</text>');
       results.forEach(function(r,idx){
         var color=resultColor(r),d=resultDash(r);
         var path=r.points.map(function(p,j){return (j?"L":"M")+x(p.elapsed).toFixed(1)+" "+y(p.soc).toFixed(1);}).join(" ");
