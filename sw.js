@@ -1,4 +1,4 @@
-const CACHE_NAME = "traknus-lithium-simulator-v25";
+const CACHE_NAME = "traknus-lithium-simulator-v26";
 const CORE_FILES = ["./", "./index.html", "./catalog.json", "./manifest.webmanifest", "./traknus_lithium_logo.png", "./assets/forklift-traknus.webp", "./assets/warehouse-forklift.webp", "./assets/toyota-3te-tow-tractor.webp", "./assets/toyota-4cbt-tow-tractor.webp", "./assets/toyota-8fb-counterbalance.webp", "./assets/toyota-8fbe.webp", "./assets/toyota-8fbh.webp", "./assets/toyota-8fbn.webp", "./assets/toyota-8fbp-order-picker.webp", "./assets/toyota-8fbr.webp", "./assets/toyota-8fbs-reach.webp", "./icons/traknus-app-180.png", "./icons/traknus-app-192.png", "./icons/traknus-app-512.png", "./icons/traknus-app-512-maskable.png", "./icons/traknus-app.svg"];
 self.addEventListener("install", event => event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CORE_FILES)).then(() => self.skipWaiting())));
 self.addEventListener("activate", event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("traknus-") && key !== CACHE_NAME).map(key => caches.delete(key)))).then(() => self.clients.claim())));
