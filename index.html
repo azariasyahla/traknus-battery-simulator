@@ -631,7 +631,52 @@
       }).join("");
       return '<article class="print-report"><header class="print-header"><img class="print-logo" src="traknus_lithium_logo.png" alt="Traknus"><div class="print-date">'+tr("Tanggal & waktu simulasi","Simulation date & time")+'<br><strong>'+date+' · '+time+'</strong></div></header><h1>'+tr("Traknus Lithium Simulator","Traknus Lithium Simulator")+'</h1><p class="print-lead">'+tr("Ringkasan berdasarkan forklift, baterai, dan jadwal kerja yang dipilih.","Summary based on the selected forklifts, batteries, and work schedule.")+'</p><section><h2>'+tr("Data customer","Customer details")+'</h2><div class="print-facts"><div class="print-fact"><span>'+tr("Perusahaan","Company")+'</span><strong>'+esc(state.customer.company)+'</strong></div><div class="print-fact"><span>'+tr("Lokasi kerja","Work location")+'</span><strong>'+esc(state.customer.location)+'</strong></div><div class="print-fact"><span>'+tr("Sales person","Salesperson")+'</span><strong>'+esc(state.customer.salesperson)+'</strong></div></div></section><section><h2>'+tr("Kondisi operasi","Operating conditions")+'</h2><div class="print-facts"><div class="print-fact"><span>'+tr("Jam operasi per hari","Operating hours per day")+'</span><strong>'+fmtHours(state.workdayHours)+' '+tr("jam","hours")+'</strong></div><div class="print-fact"><span>'+tr("Jumlah shift","Number of shifts")+'</span><strong>'+state.shiftCount+'</strong></div><div class="print-fact"><span>'+tr("Intensitas kerja","Work intensity")+'</span><strong>'+esc(intensityName(state.intensity))+'</strong></div><div class="print-fact"><span>'+tr("Tinggi angkat","Lift height")+'</span><strong>'+esc(liftName(state.lift))+'</strong></div></div></section><section><h2>'+tr("Jadwal shift dan istirahat","Shift and break schedule")+'</h2><table class="print-table"><thead><tr><th>'+tr("Shift","Shift")+'</th><th>'+tr("Mulai","Start")+'</th><th>'+tr("Durasi","Duration")+'</th><th>'+tr("Istirahat dan charging","Break and charging")+'</th></tr></thead><tbody>'+shiftRows.join("")+'</tbody></table></section><section><h2>'+tr("Perbandingan forklift dan baterai","Forklift and battery comparison")+'</h2><table class="print-table"><thead><tr><th>'+tr("Forklift / model","Forklift / model")+'</th><th>'+tr("Truck Mode","Truck mode")+'</th><th>'+tr("Baterai","Battery")+'</th><th>'+tr("Sisa setelah jadwal","Remaining after schedule")+'</th><th>'+tr("Waktu jalan terus-menerus","Continuous runtime")+'</th></tr></thead><tbody>'+resultRows+'</tbody></table></section><section class="print-chart"><h2>'+tr("Sisa baterai sepanjang jadwal","Battery level through the schedule")+'</h2><div class="chart-wrap">'+chartSvg(results,true)+'</div><div class="legend">'+results.map(function(r){return '<div class="legend-item"><span class="legend-line" style="border-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></span>'+esc(r.label)+'</div>';}).join("")+'</div>'+breakTimeline()+'</section></article>';
     }
-    function emailReport() {
+    function chartImageBlob() {
+      return new Promise(function(resolve,reject){
+        var original=document.querySelector(".chart-wrap .chart");
+        if(!original){reject(new Error("Chart not found"));return;}
+        var svg=original.cloneNode(true),vb=svg.viewBox.baseVal,width=vb.width||840,height=vb.height||372;
+        var legend=Array.from(document.querySelectorAll(".legend-item")).map(function(item){
+          var line=item.querySelector(".legend-line");
+          return {label:item.textContent.trim(),color:line?getComputedStyle(line).borderTopColor:"#2268a7",style:line?getComputedStyle(line).borderTopStyle:"solid"};
+        });
+        var cols=2,rows=Math.ceil(legend.length/cols),legendTop=height+30,totalHeight=legendTop+rows*28+44;
+        var bg=getComputedStyle(document.documentElement).getPropertyValue("--panel").trim()||"#fff";
+        svg.setAttribute("xmlns","http://www.w3.org/2000/svg");
+        svg.setAttribute("viewBox","0 0 "+width+" "+totalHeight);
+        svg.setAttribute("width",String(width*2));svg.setAttribute("height",String(totalHeight*2));
+        svg.setAttribute("style","font-family:Aptos,Arial,sans-serif");
+        var ns="http://www.w3.org/2000/svg";
+        function add(tag,attrs,text){
+          var el=document.createElementNS(ns,tag);
+          Object.keys(attrs).forEach(function(key){el.setAttribute(key,attrs[key]);});
+          if(text)el.textContent=text;
+          svg.appendChild(el);return el;
+        }
+        var back=document.createElementNS(ns,"rect");
+        back.setAttribute("x","0");back.setAttribute("y","0");back.setAttribute("width",String(width));back.setAttribute("height",String(totalHeight));back.setAttribute("fill",bg);
+        svg.insertBefore(back,svg.firstChild);
+        legend.forEach(function(item,i){
+          var col=Math.floor(i/rows),row=i%rows,x=22+col*(width/2),y=legendTop+row*28;
+          add("line",{x1:x,y1:y,x2:x+28,y2:y,stroke:item.color,"stroke-width":"3.5","stroke-dasharray":item.style==="dashed"?"7 5":item.style==="dotted"?"2 5":""});
+          add("text",{x:x+37,y:y+4,fill:"#42545c","font-size":"12", "font-family":"Aptos,Arial,sans-serif"},item.label);
+        });
+        add("text",{x:22,y:totalHeight-14,fill:"#586a73","font-size":"11","font-family":"Aptos,Arial,sans-serif"},tr("Bagian berwarna menunjukkan istirahat; warna hijau menandai charging.","Shaded bands show breaks; green bands indicate charging."));
+        var xml=new XMLSerializer().serializeToString(svg).replace(/var\(--panel\)/g,bg);
+        var image=new Image(),url=URL.createObjectURL(new Blob([xml],{type:"image/svg+xml;charset=utf-8"}));
+        image.onload=function(){
+          try{
+            var canvas=document.createElement("canvas"),scale=2;
+            canvas.width=width*scale;canvas.height=totalHeight*scale;
+            var ctx=canvas.getContext("2d");ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(image,0,0,canvas.width,canvas.height);
+            canvas.toBlob(function(blob){URL.revokeObjectURL(url);if(blob)resolve(blob);else reject(new Error("Could not create chart image"));},"image/png");
+          }catch(error){URL.revokeObjectURL(url);reject(error);}
+        };
+        image.onerror=function(){URL.revokeObjectURL(url);reject(new Error("Could not render chart image"));};
+        image.src=url;
+      });
+    }
+    async function emailReport() {
       ensureSchedule();
       var configs=allConfigs(), lines=[];
       lines.push(tr("Ringkasan simulasi baterai forklift","Forklift battery simulation summary"));
@@ -642,7 +687,7 @@
       lines.push(tr("Jam operasi harian: ","Daily operating hours: ")+fmtHours(state.workdayHours)+" "+tr("jam","hours"));
       lines.push(tr("Jumlah shift: ","Number of shifts: ")+state.shiftCount);
       for(var i=0;i<state.shiftCount;i++){
-        lines.push(tr("Shift ","Shift ")+(i+1)+": "+fmtClock(shiftStart(i))+"");
+        lines.push(tr("Shift ","Shift ")+(i+1)+": "+fmtClock(shiftStart(i)));
         state.breaks[i].forEach(function(b,j){lines.push("  "+tr("Istirahat ","Break ")+(j+1)+": "+fmtClock(breakStart(i,j))+" · "+Number(b.length||0)+" "+tr("menit","min")+" · "+(b.charge?tr("Charging","Charging"):tr("Tidak charging","Not charging")));});
       }
       lines.push(tr("Intensitas: ","Intensity: ")+intensityName(state.intensity));
@@ -656,7 +701,22 @@
         });
       });
       var subject=tr("Simulasi baterai forklift","Forklift battery simulation")+(state.customer.company?" · "+state.customer.company:"");
-      window.location.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
+      var text=lines.join("\n"),filename="Traknus-Lithium-Simulator-Chart.png";
+      try{
+        var blob=await chartImageBlob(),file=new File([blob],filename,{type:"image/png"});
+        if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+          try{await navigator.share({title:subject,text:text,files:[file]});return;}
+          catch(error){if(error&&error.name==="AbortError")return;}
+        }
+        var downloadUrl=URL.createObjectURL(blob),a=document.createElement("a");
+        a.href=downloadUrl;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+        setTimeout(function(){URL.revokeObjectURL(downloadUrl);},60000);
+        lines.push("");lines.push(tr("Gambar grafik diunduh terpisah. Lampirkan file PNG tersebut pada email.","The chart image was downloaded separately. Attach the PNG file to your email."));
+        window.location.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
+      }catch(error){
+        window.location.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(text);
+        alert(tr("Draft email dibuka, tetapi gambar grafik gagal dibuat. Kamu masih bisa menyimpan hasil sebagai PDF.","The email draft opened, but the chart image could not be created. You can still save the results as a PDF."));
+      }
     }
     function analysisScreen() {
       var configs=allConfigs(), results=[];
@@ -673,7 +733,7 @@
       html+='<div class="chart-wrap">'+chartSvg(results)+'</div><div class="legend">'+results.map(function(r){return '<div class="legend-item"><span class="legend-line" style="border-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></span>'+esc(r.label)+'</div>';}).join("")+'</div>';
       html+='<p class="chart-caption">'+tr("Warna garis menandai forklift; pola garis membedakan kapasitas baterai.","Line colors identify forklifts; line patterns distinguish battery capacities.")+'</p>'+breakTimeline()+'</section>';
       html+='<section class="panel"><div class="panel-head"><div><h2>'+tr("Ringkasan tiap pilihan baterai","Summary for each battery option")+'</h2><p class="sub">'+tr("Lihat sisa baterai di akhir jadwal dan perkiraan waktu kerja nonstop.","See the remaining battery at the end of the schedule and estimated nonstop runtime.")+'</p></div></div><div class="stat-grid">'+results.map(function(r){return '<article class="stat"><div class="stat-label">'+esc(r.label)+'</div><div class="stat-value">'+fmtNum(r.end)+'% <span style="font-size:.72rem;color:var(--muted)">'+tr("Sisa di akhir jadwal","remaining after schedule")+'</span></div><div class="sub" style="margin-top:6px">'+tr("Perkiraan kerja nonstop","Estimated nonstop runtime")+': <strong>'+fmtNum(r.runtime)+' '+tr("jam","hours")+'</strong></div></article>';}).join("")+'</div>';
-      html+='<div class="button-row"><div><div class="sub">'+tr("Estimasi mengikuti faktor dari data model; kondisi lapangan dapat berbeda.","Estimates follow the model data; actual results may vary with operating conditions.")+'</div><div class="print-hint">'+(isIOS()?tr("Di iPhone/iPad: pada pratinjau cetak, ketuk Share lalu Save to Files.","On iPhone/iPad: in print preview, tap Share, then Save to Files."):tr("Pilih “Simpan sebagai PDF” pada jendela cetak.","Choose “Save as PDF” in the print window."))+'</div><div class="print-hint">'+tr("Email membuka draft berisi ringkasan. Lampirkan PDF tersimpan bila perlu grafik lengkap.","Email opens a draft with the summary. Attach the saved PDF if you need the full chart.")+'</div></div><div class="button-group"><button class="secondary" data-act="back-trucks">← '+tr("Ubah pilihan forklift","Edit forklift choices")+'</button><button class="primary" data-act="print">⌑ '+tr("Cetak / simpan PDF","Print / save PDF")+'</button><button class="secondary" data-act="email-report">✉ '+tr("Kirim ringkasan email","Email summary")+'</button></div></div></section>';
+      html+='<div class="button-row"><div><div class="sub">'+tr("Estimasi mengikuti faktor dari data model; kondisi lapangan dapat berbeda.","Estimates follow the model data; actual results may vary with operating conditions.")+'</div><div class="print-hint">'+(isIOS()?tr("Di iPhone/iPad: pada pratinjau cetak, ketuk Share lalu Save to Files.","On iPhone/iPad: in print preview, tap Share, then Save to Files."):tr("Pilih “Simpan sebagai PDF” pada jendela cetak.","Choose “Save as PDF” in the print window."))+'</div><div class="print-hint">'+tr("Email membagikan ringkasan dan gambar grafik PNG; pilih aplikasi email pada menu berbagi.","Share the summary and chart as a PNG image; choose your email app in the share menu.")+'</div></div><div class="button-group"><button class="secondary" data-act="back-trucks">← '+tr("Ubah pilihan forklift","Edit forklift choices")+'</button><button class="primary" data-act="print">⌑ '+tr("Cetak / simpan PDF","Print / save PDF")+'</button><button class="secondary" data-act="email-report">✉ '+tr("Email + gambar grafik","Email + chart image")+'</button></div></div></section>';
       html+=printReport(configs,results);
       return html;
     }
