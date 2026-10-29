@@ -611,7 +611,7 @@
         var path=r.points.map(function(p,j){return (j?"L":"M")+x(p.elapsed).toFixed(1)+" "+y(p.soc).toFixed(1);}).join(" ");
         parts.push('<path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" '+(d?'stroke-dasharray="'+d+'"':'')+'/>');
         var last=r.points[r.points.length-1];
-        for(var hourMark=1;hourMark<max-1e-6;hourMark++){
+        for(var hourMark=0;hourMark<max-1e-6;hourMark++){
           var hourlyPoint=r.points.find(function(p){return Math.abs(p.elapsed-hourMark)<1e-6;});
           if(hourlyPoint)parts.push('<circle cx="'+x(hourlyPoint.elapsed)+'" cy="'+y(hourlyPoint.soc)+'" r="2.7" fill="'+color+'" stroke="var(--panel)" stroke-width="1"/>');
         }
