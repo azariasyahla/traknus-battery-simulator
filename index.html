@@ -50,13 +50,13 @@
     .hero-badge {flex:0 0 auto;border:1px solid rgba(69,103,113,.2);background:rgba(255,255,255,.58);padding:10px 14px;border-radius:14px;font-weight:800;color:#405c67;font-size:.9rem}
 
     /* Traknus red-and-navy hero with a real forklift photo */
-    .hero {position:relative;overflow:hidden;align-items:center;justify-content:center;gap:12px;text-align:center;min-height:174px;padding:16px 22px;background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
+    .hero {position:relative;overflow:hidden;align-items:center;justify-content:center;gap:12px;text-align:left;min-height:174px;padding:16px 22px;background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
     .hero:after {content:"";position:absolute;right:29%;top:-28%;width:20%;height:160%;background:rgba(255,255,255,.08);transform:skewX(-34deg);pointer-events:none}
     [data-theme="dark"] .hero {background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
-    .hero-copy {position:relative;z-index:1;max-width:60%;text-align:center}
+    .hero-copy {position:relative;z-index:1;width:min(58%,600px);max-width:600px;flex:0 1 600px;text-align:left}
     .hero h1 {color:#fff;font-size:clamp(1.8rem,3.1vw,2.35rem);letter-spacing:0}
     .hero p,[data-theme="dark"] .hero p {color:#e0e8fa}
-    .hero-machine {position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:min(40%,400px);height:148px;padding:0;background:transparent;border-radius:0;box-shadow:none}
+    .hero-machine {position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:min(35%,340px);height:154px;justify-content:flex-end;padding:0;background:transparent;border-radius:0;box-shadow:none}
     .hero-forklift {display:block;width:100%;height:100%;object-fit:contain}
     .customer-block {margin:22px 0 18px;padding:17px;border:1px solid var(--line);border-radius:16px;background:var(--panel-soft)}
     .customer-block h3 {margin:0 0 4px}
