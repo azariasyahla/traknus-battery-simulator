@@ -50,13 +50,13 @@
     .hero-badge {flex:0 0 auto;border:1px solid rgba(69,103,113,.2);background:rgba(255,255,255,.58);padding:10px 14px;border-radius:14px;font-weight:800;color:#405c67;font-size:.9rem}
 
     /* Traknus red-and-navy hero with a real forklift photo */
-    .hero {position:relative;overflow:hidden;align-items:center;min-height:218px;padding:28px 30px;background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
+    .hero {position:relative;overflow:hidden;align-items:center;justify-content:center;gap:34px;text-align:center;min-height:218px;padding:28px 30px;background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
     .hero:after {content:"";position:absolute;right:29%;top:-28%;width:20%;height:160%;background:rgba(255,255,255,.08);transform:skewX(-34deg);pointer-events:none}
     [data-theme="dark"] .hero {background:linear-gradient(112deg,#111e4d 0%,#233c78 61%,#d71927 61%,#c51424 100%);color:#fff}
-    .hero-copy {position:relative;z-index:1;max-width:58%}
+    .hero-copy {position:relative;z-index:1;max-width:50%;text-align:center}
     .hero h1 {color:#fff;font-size:clamp(1.8rem,3.5vw,2.7rem);letter-spacing:0}
     .hero p,[data-theme="dark"] .hero p {color:#e0e8fa}
-    .hero-machine {position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:min(34%,340px);height:160px;padding:0;background:transparent;border-radius:0;box-shadow:none}
+    .hero-machine {position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:min(42%,390px);height:190px;padding:0;background:transparent;border-radius:0;box-shadow:none}
     .hero-forklift {display:block;width:100%;height:100%;object-fit:contain}
     .customer-block {margin:22px 0 18px;padding:17px;border:1px solid var(--line);border-radius:16px;background:var(--panel-soft)}
     .customer-block h3 {margin:0 0 4px}
@@ -293,14 +293,14 @@
       </div>
     </div>
     <section class="hero">
+      <div class="hero-machine"><img class="hero-forklift" src="assets/forklift-traknus.webp" alt="Toyota counterbalance forklift from Traktor Nusantara"></div>
       <div class="hero-copy">
         <h1 id="heroTitle">Traknus Lithium Simulator</h1>
         <p id="heroSub">Plan forklift battery capacity around the work schedule.</p>
       </div>
-      <div class="hero-machine"><img class="hero-forklift" src="assets/forklift-traknus.webp" alt="Toyota counterbalance forklift from Traktor Nusantara"></div>
     </section>
     <div id="app"></div>
-    <footer class="footer">© 2026 · Developed by <strong>Azaria Syahla Fitan Adibah</strong></footer>
+    <footer class="footer">© 2026 · Developed by <strong>Material Handling Parts</strong></footer>
   </main>
   <script>
     var CATALOG = null;
@@ -425,11 +425,9 @@
       state.shiftStarts.length=state.shiftCount;
       state.shiftLengths.length=state.shiftCount;
     }
-    function shiftLength(i) { return Number(state.shiftLengths[i]||state.workdayHours/state.shiftCount); }
+    function shiftLength(i) { return Number(state.workdayHours/state.shiftCount); }
     function defaultBreakMinutes(i) { return Math.max(1,Math.round(Math.min(30,shiftLength(i)*60/3)/5)*5); }
-    function totalShiftHours() {
-      return state.shiftLengths.slice(0,state.shiftCount).reduce(function(sum,h){return sum+Number(h||0);},0);
-    }
+    function totalShiftHours() { return Number(state.workdayHours); }
     function shiftStart(i) {
       if(i===0) return toMinute(state.shiftStarts[0]||state.firstStart);
       var previousEnd=shiftStart(i-1)+shiftLength(i-1)*60;
@@ -450,7 +448,7 @@
         var start=shiftStart(i), rows=state.breaks[i].map(function(b,j){
           return '<div class="break-row"><div class="break-label">'+tr("Istirahat","Break")+' '+(j+1)+'</div><div class="break-controls"><div class="field"><label>'+tr("Mulai istirahat","Break starts")+'</label><input class="input" type="time" aria-label="'+tr("Waktu mulai istirahat "+(j+1),"Break "+(j+1)+" start time")+'" data-input="break-time" data-shift="'+i+'" data-break="'+j+'" value="'+fmtClock(breakStart(i,j))+'"></div><div class="field"><label>'+tr("Durasi (menit)","Duration (minutes)")+'</label><input class="input" type="number" min="1" max="1440" step="1" aria-label="'+tr("Durasi istirahat "+(j+1)+" dalam menit","Break "+(j+1)+" duration in minutes")+'" data-input="break-length" data-shift="'+i+'" data-break="'+j+'" value="'+Number(b.length||30)+'"></div><div class="field"><label>'+tr("Forklift di-charge?","Charging during break?")+'</label><div class="charge-toggle"><button class="'+(!b.charge?"selected":"")+'" data-act="charge" data-shift="'+i+'" data-break="'+j+'" data-value="false">'+tr("Tidak","No")+'</button><button class="'+(b.charge?"selected":"")+'" data-act="charge" data-shift="'+i+'" data-break="'+j+'" data-value="true">'+tr("Ya","Yes")+'</button></div></div></div></div>';
         }).join("");
-        shiftCards.push('<article class="shift-card"><div class="shift-card-head"><span class="shift-name">'+tr("Shift","Shift")+' '+(i+1)+'</span></div><div class="field-row"><div class="field"><label>'+tr("Jam mulai","Start time")+'</label><input class="input" type="time" aria-label="'+tr("Jam mulai shift "+(i+1),"Shift "+(i+1)+" start time")+'" data-input="shift-start" data-shift="'+i+'" value="'+fmtClock(start)+'"></div><div class="field"><label>'+tr("Lama shift (jam)","Shift length (hours)")+'</label><input class="input" type="number" min="0.01" max="24" step="any" aria-label="'+tr("Lama shift "+(i+1)+" dalam jam","Shift "+(i+1)+" length in hours")+'" data-input="shift-length" data-shift="'+i+'" value="'+inputHours(shiftLength(i))+'"></div></div><div class="break-section"><div class="break-section-title">'+tr("Istirahat dan charging","Break and charging")+'</div><p class="sub">'+tr("Atur waktu dan durasi istirahat dalam menit. Pilih Ya hanya jika forklift di-charge selama jeda ini.","Set the break time and duration in minutes. Choose Yes only if the forklift is charging during this break.")+'</p><div class="break-list">'+rows+'</div><button class="small-btn" style="margin-top:10px" data-act="add-break" data-shift="'+i+'">+ '+tr("Tambah istirahat","Add a break")+'</button></div></article>');
+        shiftCards.push('<article class="shift-card"><div class="shift-card-head"><span class="shift-name">'+tr("Shift","Shift")+' '+(i+1)+'</span></div><div class="field-row"><div class="field"><label>'+tr("Jam mulai","Start time")+'</label><input class="input" type="time" aria-label="'+tr("Jam mulai shift "+(i+1),"Shift "+(i+1)+" start time")+'" data-input="shift-start" data-shift="'+i+'" value="'+fmtClock(start)+'"></div></div><p class="sub shift-duration-note">'+tr("Lama operasi otomatis: ","Shift operating time (calculated): ")+fmtHours(shiftLength(i))+" "+tr("jam","h")+'</p><div class="break-section"><div class="break-section-title">'+tr("Istirahat dan charging","Break and charging")+'</div><p class="sub">'+tr("Atur waktu dan durasi istirahat dalam menit. Pilih Ya hanya jika forklift di-charge selama jeda ini.","Set the break time and duration in minutes. Choose Yes only if the forklift is charging during this break.")+'</p><div class="break-list">'+rows+'</div><button class="small-btn" style="margin-top:10px" data-act="add-break" data-shift="'+i+'">+ '+tr("Tambah istirahat","Add a break")+'</button></div></article>');
       }
       return '<div class="schedule-grid">'+shiftCards.join("")+'</div>';
     }
@@ -555,10 +553,13 @@
         var title=tr("Shift ","Shift ")+(si+1)+" · "+fmtClock(start)+"–"+fmtClock(start+Number(b.length||0))+" · "+(b.charge?tr("charging","charging"):tr("tidak charging","not charging"));
         parts.push('<g><title>'+esc(title)+'</title><rect x="'+x0.toFixed(1)+'" y="'+T+'" width="'+(x1-x0).toFixed(1)+'" height="'+ih+'" rx="3" fill="'+fill+'" opacity=".28" stroke="'+fill+'" stroke-width="1.4" stroke-opacity=".75"/></g>');
       });
-      for(var v=0;v<=100;v+=10){
-        var major=true;
-        parts.push('<line x1="'+L+'" y1="'+y(v)+'" x2="'+(W-R)+'" y2="'+y(v)+'" stroke="'+line+'" stroke-width="'+(major?"1":".7")+'" opacity="'+(major?".7":".34")+'"/><text x="'+(L-9)+'" y="'+(y(v)+3.5)+'" text-anchor="end" fill="'+ink+'" font-size="10">'+v+'%</text>');
+      parts.push('<rect x="'+L+'" y="'+y(10).toFixed(1)+'" width="'+iw+'" height="'+(y(0)-y(10)).toFixed(1)+'" fill="#e54855" opacity=".16"/>');
+      for(var v=0;v<=100;v++){
+        var major=v%10===0, medium=v%5===0;
+        parts.push('<line x1="'+L+'" y1="'+y(v)+'" x2="'+(W-R)+'" y2="'+y(v)+'" stroke="'+line+'" stroke-width="'+(major?"1":medium?".65":".35")+'" opacity="'+(major?".72":medium?".34":".14")+'"/>');
+        if(major)parts.push('<text x="'+(L-9)+'" y="'+(y(v)+3.5)+'" text-anchor="end" fill="'+ink+'" font-size="10">'+v+'%</text>');
       }
+      parts.push('<text x="'+(L+10)+'" y="'+(y(5)+4)+'" fill="#9f2630" font-size="12" font-style="italic" font-weight="700">'+tr("Area tidak direkomendasikan","Not recommended area")+'</text>');
       var wholeHours=Math.floor(max+1e-9),fractionalEnd=max-wholeHours>1e-6;
       var tightEnd=fractionalEnd&&x(max)-x(wholeHours)<44;
       for(var hour=0;hour<=wholeHours;hour++){
@@ -569,8 +570,8 @@
         var endClock=fmtClock(base+max*60);
         parts.push('<line x1="'+x(max)+'" y1="'+T+'" x2="'+x(max)+'" y2="'+(H-B)+'" stroke="'+line+'" stroke-width="1" opacity=".58"/><text x="'+x(max)+'" y="'+(H-17)+'" text-anchor="middle" fill="'+ink+'" font-size="10">'+endClock+'</text>');
       }
-      parts.push('<text x="18" y="'+(T+ih/2)+'" transform="rotate(-90 18 '+(T+ih/2)+')" text-anchor="middle" fill="'+ink+'" font-size="11" font-weight="700">'+tr("State of charge (SOC)","State of charge (SOC)")+'</text>');
-      parts.push('<text x="'+(L+iw/2)+'" y="'+(H-4)+'" text-anchor="middle" fill="'+ink+'" font-size="11" font-weight="700">'+tr("Time","Waktu")+'</text>');
+      parts.push('<text x="18" y="'+(T+ih/2)+'" transform="rotate(-90 18 '+(T+ih/2)+')" text-anchor="middle" fill="'+ink+'" font-size="11" font-weight="700">'+tr("State of charge (SOC) · sisa baterai","State of charge (SOC) · battery remaining")+'</text>');
+      parts.push('<text x="'+(L+iw/2)+'" y="'+(H-4)+'" text-anchor="middle" fill="'+ink+'" font-size="11" font-weight="700">'+tr("Waktu","Time")+'</text>');
       results.forEach(function(r,idx){
         var color=resultColor(r),d=resultDash(r);
         var path=r.points.map(function(p,j){return (j?"L":"M")+x(p.elapsed).toFixed(1)+" "+y(p.soc).toFixed(1);}).join(" ");
@@ -623,6 +624,33 @@
       }).join("");
       return '<article class="print-report"><header class="print-header"><img class="print-logo" src="traknus_lithium_logo.png" alt="Traknus"><div class="print-date">'+tr("Tanggal & waktu simulasi","Simulation date & time")+'<br><strong>'+date+' · '+time+'</strong></div></header><h1>'+tr("Traknus Lithium Simulator","Traknus Lithium Simulator")+'</h1><p class="print-lead">'+tr("Ringkasan berdasarkan forklift, baterai, dan jadwal kerja yang dipilih.","Summary based on the selected forklifts, batteries, and work schedule.")+'</p><section><h2>'+tr("Data customer","Customer details")+'</h2><div class="print-facts"><div class="print-fact"><span>'+tr("Perusahaan","Company")+'</span><strong>'+esc(state.customer.company)+'</strong></div><div class="print-fact"><span>'+tr("Lokasi kerja","Work location")+'</span><strong>'+esc(state.customer.location)+'</strong></div><div class="print-fact"><span>'+tr("Sales person","Salesperson")+'</span><strong>'+esc(state.customer.salesperson)+'</strong></div></div></section><section><h2>'+tr("Kondisi operasi","Operating conditions")+'</h2><div class="print-facts"><div class="print-fact"><span>'+tr("Jam operasi per hari","Operating hours per day")+'</span><strong>'+fmtHours(state.workdayHours)+' '+tr("jam","hours")+'</strong></div><div class="print-fact"><span>'+tr("Jumlah shift","Number of shifts")+'</span><strong>'+state.shiftCount+'</strong></div><div class="print-fact"><span>'+tr("Intensitas kerja","Work intensity")+'</span><strong>'+esc(intensityName(state.intensity))+'</strong></div><div class="print-fact"><span>'+tr("Tinggi angkat","Lift height")+'</span><strong>'+esc(liftName(state.lift))+'</strong></div></div></section><section><h2>'+tr("Jadwal shift dan istirahat","Shift and break schedule")+'</h2><table class="print-table"><thead><tr><th>'+tr("Shift","Shift")+'</th><th>'+tr("Mulai","Start")+'</th><th>'+tr("Durasi","Duration")+'</th><th>'+tr("Istirahat dan charging","Break and charging")+'</th></tr></thead><tbody>'+shiftRows.join("")+'</tbody></table></section><section><h2>'+tr("Perbandingan forklift dan baterai","Forklift and battery comparison")+'</h2><table class="print-table"><thead><tr><th>'+tr("Forklift / model","Forklift / model")+'</th><th>'+tr("Truck Mode","Truck mode")+'</th><th>'+tr("Baterai","Battery")+'</th><th>'+tr("Sisa setelah jadwal","Remaining after schedule")+'</th><th>'+tr("Waktu jalan terus-menerus","Continuous runtime")+'</th></tr></thead><tbody>'+resultRows+'</tbody></table></section><section class="print-chart"><h2>'+tr("Sisa baterai sepanjang jadwal","Battery level through the schedule")+'</h2><div class="chart-wrap">'+chartSvg(results,true)+'</div><div class="legend">'+results.map(function(r){return '<div class="legend-item"><span class="legend-line" style="border-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></span>'+esc(r.label)+'</div>';}).join("")+'</div>'+breakTimeline()+'</section></article>';
     }
+    function emailReport() {
+      ensureSchedule();
+      var configs=allConfigs(), lines=[];
+      lines.push(tr("Ringkasan simulasi baterai forklift","Forklift battery simulation summary"));
+      lines.push("");
+      if(state.customer.company)lines.push(tr("Perusahaan: ","Company: ")+state.customer.company);
+      if(state.customer.location)lines.push(tr("Lokasi kerja: ","Work location: ")+state.customer.location);
+      if(state.customer.salesperson)lines.push(tr("Sales person: ","Salesperson: ")+state.customer.salesperson);
+      lines.push(tr("Jam operasi harian: ","Daily operating hours: ")+fmtHours(state.workdayHours)+" "+tr("jam","hours"));
+      lines.push(tr("Jumlah shift: ","Number of shifts: ")+state.shiftCount);
+      for(var i=0;i<state.shiftCount;i++){
+        lines.push(tr("Shift ","Shift ")+(i+1)+": "+fmtClock(shiftStart(i))+" · "+fmtHours(shiftLength(i))+" "+tr("jam","hours"));
+        state.breaks[i].forEach(function(b,j){lines.push("  "+tr("Istirahat ","Break ")+(j+1)+": "+fmtClock(breakStart(i,j))+" · "+Number(b.length||0)+" "+tr("menit","min")+" · "+(b.charge?tr("Charging","Charging"):tr("Tidak charging","Not charging")));});
+      }
+      lines.push(tr("Intensitas: ","Intensity: ")+intensityName(state.intensity));
+      lines.push(tr("Tinggi angkat: ","Lift height: ")+liftName(state.lift));
+      lines.push("");
+      lines.push(tr("Hasil perkiraan:","Estimated results:"));
+      configs.forEach(function(config){
+        (config.spec.battery_options||[]).filter(function(b){return config.truck.batteries.indexOf(b.ah)>=0;}).forEach(function(battery){
+          var result=simulate(config,battery);
+          lines.push(config.truck.name+" · "+config.spec.model+" · "+fmtNum(battery.ah)+" Ah: "+fmtNum(result.end)+"% "+tr("tersisa","remaining")+" · "+fmtNum(result.draw)+" Ah/h");
+        });
+      });
+      var subject=tr("Simulasi baterai forklift","Forklift battery simulation")+(state.customer.company?" · "+state.customer.company:"");
+      window.location.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
+    }
     function analysisScreen() {
       var configs=allConfigs(), results=[];
       configs.forEach(function(c){
@@ -638,7 +666,7 @@
       html+='<div class="chart-wrap">'+chartSvg(results)+'</div><div class="legend">'+results.map(function(r){return '<div class="legend-item"><span class="legend-line" style="border-color:'+resultColor(r)+';border-top-style:'+resultDashStyle(r)+'"></span>'+esc(r.label)+'</div>';}).join("")+'</div>';
       html+='<p class="chart-caption">'+tr("Warna garis menandai forklift; pola garis membedakan kapasitas baterai.","Line colors identify forklifts; line patterns distinguish battery capacities.")+'</p>'+breakTimeline()+'</section>';
       html+='<section class="panel"><div class="panel-head"><div><h2>'+tr("Ringkasan tiap pilihan baterai","Summary for each battery option")+'</h2><p class="sub">'+tr("Lihat sisa baterai di akhir jadwal dan perkiraan waktu kerja nonstop.","See the remaining battery at the end of the schedule and estimated nonstop runtime.")+'</p></div></div><div class="stat-grid">'+results.map(function(r){return '<article class="stat"><div class="stat-label">'+esc(r.label)+'</div><div class="stat-value">'+fmtNum(r.end)+'% <span style="font-size:.72rem;color:var(--muted)">'+tr("Sisa di akhir jadwal","remaining after schedule")+'</span></div><div class="sub" style="margin-top:6px">'+tr("Perkiraan kerja nonstop","Estimated nonstop runtime")+': <strong>'+fmtNum(r.runtime)+' '+tr("jam","hours")+'</strong></div></article>';}).join("")+'</div>';
-      html+='<div class="button-row"><div><div class="sub">'+tr("Estimasi mengikuti faktor dari data model; kondisi lapangan dapat berbeda.","Estimates follow the model data; actual results may vary with operating conditions.")+'</div><div class="print-hint">'+(isIOS()?tr("Di iPhone/iPad: pada pratinjau cetak, ketuk Share lalu Save to Files.","On iPhone/iPad: in print preview, tap Share, then Save to Files."):tr("Pilih “Simpan sebagai PDF” pada jendela cetak.","Choose “Save as PDF” in the print window."))+'</div></div><div class="button-group"><button class="secondary" data-act="back-trucks">← '+tr("Ubah pilihan forklift","Edit forklift choices")+'</button><button class="primary" data-act="print">⌑ '+tr("Cetak / simpan PDF","Print / save PDF")+'</button></div></div></section>';
+      html+='<div class="button-row"><div><div class="sub">'+tr("Estimasi mengikuti faktor dari data model; kondisi lapangan dapat berbeda.","Estimates follow the model data; actual results may vary with operating conditions.")+'</div><div class="print-hint">'+(isIOS()?tr("Di iPhone/iPad: pada pratinjau cetak, ketuk Share lalu Save to Files.","On iPhone/iPad: in print preview, tap Share, then Save to Files."):tr("Pilih “Simpan sebagai PDF” pada jendela cetak.","Choose “Save as PDF” in the print window."))+'</div><div class="print-hint">'+tr("Email membuka draft berisi ringkasan. Lampirkan PDF tersimpan bila perlu grafik lengkap.","Email opens a draft with the summary. Attach the saved PDF if you need the full chart.")+'</div></div><div class="button-group"><button class="secondary" data-act="back-trucks">← '+tr("Ubah pilihan forklift","Edit forklift choices")+'</button><button class="primary" data-act="print">⌑ '+tr("Cetak / simpan PDF","Print / save PDF")+'</button><button class="secondary" data-act="email-report">✉ '+tr("Kirim ringkasan email","Email summary")+'</button></div></div></section>';
       html+=printReport(configs,results);
       return html;
     }
@@ -701,6 +729,7 @@
       else if(act==="lift")state.lift=b.dataset.value;
       else if(act==="start-over"){state= {screen:"welcome",lang:state.lang,theme:state.theme,customer:{company:"",location:"",salesperson:""},customerError:"",trucks:[newTruck("Forklift 1")],workdayHours:8,shiftCount:1,shiftLengths:[],scheduleConfigKey:null,firstStart:"08:00",shiftStarts:[],breaks:[],intensity:"High",lift:"All"};}
       else if(act==="print"){window.print();return;}
+      else if(act==="email-report"){emailReport();return;}
       else if(act==="analyze"){var err=validSetup();if(err){var existing=document.getElementById("formError");if(existing)existing.remove();b.insertAdjacentHTML("afterend",'<span id="formError" class="error">'+esc(err)+'</span>');return;}state.screen="analysis";}
       render();
     });
@@ -712,7 +741,7 @@
       if(input==="shift-count")state.shiftCount=Math.max(1,Math.min(24,parseInt(el.value,10)||1));
       else if(input==="workday-hours")state.workdayHours=Math.max(1,Math.min(24,Number(el.value)||8));
       else if(input==="shift-start"){var si=Number(el.dataset.shift);state.shiftStarts[si]=el.value;if(si===0)state.firstStart=el.value;for(var j=si+1;j<state.shiftCount;j++)state.shiftStarts[j]=null;}
-      else if(input==="shift-length"){var si=Number(el.dataset.shift);state.shiftLengths[si]=Math.max(.01,Math.min(24,Number(el.value)||.01));for(var k=si+1;k<state.shiftCount;k++)state.shiftStarts[k]=null;}
+      
       else if(input==="break-time"){var si=Number(el.dataset.shift),bi=Number(el.dataset.break);state.breaks[si][bi].start=el.value;}
       else if(input==="break-length"){var si=Number(el.dataset.shift),bi=Number(el.dataset.break);state.breaks[si][bi].length=Math.max(1,Math.min(1440,Number(el.value)||1));}
       render();
